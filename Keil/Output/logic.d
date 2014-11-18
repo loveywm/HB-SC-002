@@ -1,0 +1,11 @@
+.\output\logic.o: ..\SourceFile\App\logic.c
+.\output\logic.o: ..\SourceFile\System\system.h
+.\output\logic.o: C:\Keil\ARM\ARMCC\bin\..\include\string.h
+.\output\logic.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\output\logic.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\output\logic.o: C:\Keil\ARM\ARMCC\bin\..\include\stdarg.h
+.\output\logic.o: ..\SourceFile\System\Device\device.h
+.\output\logic.o: ..\SourceFile\System\OS\os.h
+.\output\logic.o: ..\SourceFile\System\GUI\gui.h
+.\output\logic.o: ..\SourceFile\App\app.h
+.\output\logic.o: ..\SourceFile\App\logic.h

@@ -1,0 +1,12 @@
+.\output\menu.o: ..\SourceFile\App\menu.c
+.\output\menu.o: ..\SourceFile\System\system.h
+.\output\menu.o: C:\Keil\ARM\ARMCC\bin\..\include\string.h
+.\output\menu.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\output\menu.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\output\menu.o: C:\Keil\ARM\ARMCC\bin\..\include\stdarg.h
+.\output\menu.o: ..\SourceFile\System\Device\device.h
+.\output\menu.o: ..\SourceFile\System\OS\os.h
+.\output\menu.o: ..\SourceFile\System\GUI\gui.h
+.\output\menu.o: ..\SourceFile\App\app.h
+.\output\menu.o: ..\SourceFile\App\logic.h
+.\output\menu.o: ..\SourceFile\App\menu.h

@@ -1,0 +1,25 @@
+--cpu Cortex-M3
+".\output\app.o"
+".\output\system.o"
+".\output\device.o"
+".\output\device_key.o"
+".\output\device_rtc.o"
+".\output\device_timer.o"
+".\output\device_io.o"
+".\output\device_adc.o"
+".\output\device_usart.o"
+".\output\device_systick.o"
+".\output\stm32f10x_it.o"
+".\output\core_cm3.o"
+".\output\system_stm32f10x.o"
+".\output\startup_stm32f10x_md.o"
+".\output\stm32f10x_usart.o"
+".\output\misc.o"
+".\output\stm32f10x_gpio.o"
+".\output\stm32f10x_rcc.o"
+".\output\stm32f10x_flash.o"
+".\output\stm32f10x_adc.o"
+--library_type=microlib --strict --scatter ".\Output\HB-SC-002.sct"
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\HB-SC-002.map" -o .\Output\HB-SC-002.axf

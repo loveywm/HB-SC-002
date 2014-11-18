@@ -1,0 +1,341 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;/*********************** (C) COPYRIGHT 2010 Libraworks 
+                       *************************
+    2 00000000         ;* File Name : os_cpu_a.asm 
+    3 00000000         ;* Author  : Librae 
+    4 00000000         ;* Version  : V1.0
+    5 00000000         ;* Date   : 06/10/2010
+    6 00000000         ;* Description : ¦ÌCOS-II asm port
+    7 00000000         ;*******************************************************
+                       ************************/
+    8 00000000         
+    9 00000000                 IMPORT           OsRunning   ; External referenc
+                                                            es
+   10 00000000                 IMPORT           OsCurrentPriority
+   11 00000000                 IMPORT           OsHighReadyPriority
+   12 00000000                 IMPORT           OsCurrentTaskPointer
+   13 00000000                 IMPORT           OsHighReadyTaskPointer
+   14 00000000         
+   15 00000000                 EXPORT           OsStartHighReadyTask
+   16 00000000                 EXPORT           OsSwitchContext
+   17 00000000         
+   18 00000000                 EXPORT           PendSV_Handler
+   19 00000000         
+   20 00000000         
+   21 00000000 E000ED04 
+                       NVIC_INT_CTRL
+                               EQU              0xE000ED04  ; ÖÐ¶Ï¿ØÖÆ¼Ä´æÆ÷
+   22 00000000 10000000 
+                       NVIC_PENDSVSET
+                               EQU              0x10000000  ; ´¥·¢Èí¼þÖÐ¶ÏµÄÖµ.
+                                                            
+   23 00000000         
+   24 00000000         
+   25 00000000                 PRESERVE8
+   26 00000000         
+   27 00000000                 AREA             |.text|, CODE, READONLY
+   28 00000000                 THUMB
+   29 00000000         
+   30 00000000         
+   31 00000000         
+   32 00000000         
+   33 00000000         ;/******************************************************
+                       ********************************
+   34 00000000         ;* º¯ÊýÃû³Æ: OsStartHighReadyTask
+   35 00000000         ;*
+   36 00000000         ;* ¹¦ÄÜÃèÊö: Ê¹ÓÃµ÷¶ÈÆ÷ÔËÐÐµÚÒ»¸öÈÎÎñ
+   37 00000000         ;* 
+   38 00000000         ;* ²Î    Êý: None
+   39 00000000         ;*
+   40 00000000         ;* ·µ »Ø Öµ: None
+   41 00000000         ;*******************************************************
+                       *******************************/  
+   42 00000000         
+   43 00000000         OsStartHighReadyTask
+   44 00000000 F04F 0400       MOV              R4, #0      ; set the PSP to 0 
+                                                            for initial context
+                                                             switch call
+   45 00000004 F384 8809       MSR              PSP, R4
+   46 00000008         
+   47 00000008 4C16            LDR              R4, =OsRunning 
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                                                            ; OSRunning = TRUE
+   48 0000000A F04F 0501       MOV              R5, #1
+   49 0000000E 7025            STRB             R5, [R4]
+   50 00000010         
+   51 00000010         ;ÇÐ»»µ½×î¸ßÓÅÏÈ¼¶µÄÈÎÎñ
+   52 00000010 4C15            LDR              R4, =NVIC_INT_CTRL ;rigger the 
+                                                            PendSV exception (c
+                                                            auses context switc
+                                                            h)
+   53 00000012 F04F 5580       LDR              R5, =NVIC_PENDSVSET
+   54 00000016 6025            STR              R5, [R4]
+   55 00000018         
+   56 00000018 B662            CPSIE            I           ;enable interrupts 
+                                                            at processor level
+   57 0000001A         StartHang
+   58 0000001A E7FE            B                StartHang   ;should never get h
+                                                            ere
+   59 0000001C         
+   60 0000001C         ;/******************************************************
+                       ********************************
+   61 0000001C         ;* º¯ÊýÃû³Æ: OsSwitchContext
+   62 0000001C         ;*
+   63 0000001C         ;* ¹¦ÄÜÃèÊö: ÈÎÎñ¼¶ÉÏÏÂÎÄÇÐ»»         
+   64 0000001C         ;*
+   65 0000001C         ;* ²Î    Êý: None
+   66 0000001C         ;*
+   67 0000001C         ;* ·µ »Ø Öµ: None
+   68 0000001C         ;*******************************************************
+                       ********************************/
+   69 0000001C         
+   70 0000001C         OsSwitchContext
+   71 0000001C B430            PUSH             {R4, R5}
+   72 0000001E 4C12            LDR              R4, =NVIC_INT_CTRL ;´¥·¢PendSVÒ
+                                                            ì³£ (causes context
+                                                             switch)
+   73 00000020 F04F 5580       LDR              R5, =NVIC_PENDSVSET
+   74 00000024 6025            STR              R5, [R4]
+   75 00000026 BC30            POP              {R4, R5}
+   76 00000028 4770            BX               LR
+   77 0000002A         
+   78 0000002A         ;/******************************************************
+                       ********************************
+   79 0000002A         ;* º¯ÊýÃû³Æ: PendSV
+   80 0000002A         ;*
+   81 0000002A         ;* ¹¦ÄÜÃèÊö: PendSV is used to cause a context switch.
+   82 0000002A         ;*
+   83 0000002A         ;* ²Î    Êý: None
+   84 0000002A         ;*
+   85 0000002A         ;* ·µ »Ø Öµ: None
+   86 0000002A         ;*******************************************************
+                       ********************************/
+   87 0000002A         
+   88 0000002A         PendSV_Handler
+   89 0000002A B672            CPSID            I           ; Prevent interrupt
+                                                            ion during context 
+                                                            switch
+   90 0000002C F3EF 8009       MRS              R0, PSP     ; PSP is process st
+                                                            ack pointer Èç¹ûÔÚÓ
+                                                            ÃPSP¶ÑÕ»,Ôò¿ÉÒÔºöÂÔ
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+                                                            ±£´æ¼Ä´æÆ÷,²Î¿¼CM3È
+                                                            ¨ÍþÖÐµÄË«¶ÑÕ»-°×²Ë×
+                                                            ¢
+   91 00000030 B128            CBZ              R0, PendSV_Handler_Nosave ; Ski
+                                                            p register save the
+                                                             first time
+   92 00000032         
+   93 00000032 3820            SUBS             R0, R0, #0x20 ; Save remaining 
+                                                            regs r4-11 on proce
+                                                            ss stack
+   94 00000034 E880 0FF0       STM              R0, {R4-R11}
+   95 00000038         
+   96 00000038 490C            LDR              R1, =OsCurrentTaskPointer ; OST
+                                                            CBCur->OSTCBStkPtr 
+                                                            = SP;
+   97 0000003A 6809            LDR              R1, [R1]
+   98 0000003C 6008            STR              R0, [R1]    ; R0 is SP of proce
+                                                            ss being switched o
+                                                            ut
+   99 0000003E         
+  100 0000003E         ; At this point, entire context of process has been save
+                       d
+  101 0000003E         PendSV_Handler_Nosave
+  102 0000003E 480C            LDR              R0, =OsCurrentPriority ; OSPrio
+                                                            Cur = OSPrioHighRdy
+                                                            ;
+  103 00000040 490C            LDR              R1, =OsHighReadyPriority
+  104 00000042 780A            LDRB             R2, [R1]
+  105 00000044 7002            STRB             R2, [R0]
+  106 00000046         
+  107 00000046 4809            LDR              R0, =OsCurrentTaskPointer ; OST
+                                                            CBCur  = OSTCBHighR
+                                                            dy;
+  108 00000048 490B            LDR              R1, =OsHighReadyTaskPointer
+  109 0000004A 680A            LDR              R2, [R1]
+  110 0000004C 6002            STR              R2, [R0]
+  111 0000004E         
+  112 0000004E 6810            LDR              R0, [R2]    ; R0 is new process
+                                                             SP; SP = OSTCBHigh
+                                                            Rdy->OSTCBStkPtr;
+  113 00000050 E890 0FF0       LDM              R0, {R4-R11} ; Restore r4-11 fr
+                                                            om new process stac
+                                                            k
+  114 00000054 3020            ADDS             R0, R0, #0x20
+  115 00000056 F380 8809       MSR              PSP, R0     ; Load PSP with new
+                                                             process SP
+  116 0000005A F04E 0E04       ORR              LR, LR, #0x04 ; Ensure exceptio
+                                                            n return uses proce
+                                                            ss stack
+  117 0000005E B662            CPSIE            I
+  118 00000060 4770            BX               LR          ; Exception return 
+                                                            will restore remain
+                                                            ing context
+  119 00000062         
+  120 00000062         
+  121 00000062         
+  122 00000062         
+  123 00000062 00 00           ALIGN
+  124 00000064         
+
+
+
+ARM Macro Assembler    Page 4 
+
+
+  125 00000064                 END
+              00000000 
+              E000ED04 
+              00000000 
+              00000000 
+              00000000 
+              00000000 
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\output
+\os_a.d -o.\output\os_a.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\PACK\ARM\CMSIS\3
+.20.4\CMSIS\Include -IC:\Keil\ARM\Inc\ST\STM32F10x --predefine="__MICROLIB SETA
+ 1" --list=.\os_a.lst ..\SourceFile\System\OS\os_a.asm
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 27 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      None
+Comment: .text unused
+OsStartHighReadyTask 00000000
+
+Symbol: OsStartHighReadyTask
+   Definitions
+      At line 43 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 15 in file ..\SourceFile\System\OS\os_a.asm
+Comment: OsStartHighReadyTask used once
+OsSwitchContext 0000001C
+
+Symbol: OsSwitchContext
+   Definitions
+      At line 70 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 16 in file ..\SourceFile\System\OS\os_a.asm
+Comment: OsSwitchContext used once
+PendSV_Handler 0000002A
+
+Symbol: PendSV_Handler
+   Definitions
+      At line 88 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 18 in file ..\SourceFile\System\OS\os_a.asm
+Comment: PendSV_Handler used once
+PendSV_Handler_Nosave 0000003E
+
+Symbol: PendSV_Handler_Nosave
+   Definitions
+      At line 101 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 91 in file ..\SourceFile\System\OS\os_a.asm
+Comment: PendSV_Handler_Nosave used once
+StartHang 0000001A
+
+Symbol: StartHang
+   Definitions
+      At line 57 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 58 in file ..\SourceFile\System\OS\os_a.asm
+Comment: StartHang used once
+6 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+NVIC_INT_CTRL E000ED04
+
+Symbol: NVIC_INT_CTRL
+   Definitions
+      At line 21 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 52 in file ..\SourceFile\System\OS\os_a.asm
+      At line 72 in file ..\SourceFile\System\OS\os_a.asm
+
+NVIC_PENDSVSET 10000000
+
+Symbol: NVIC_PENDSVSET
+   Definitions
+      At line 22 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 53 in file ..\SourceFile\System\OS\os_a.asm
+      At line 73 in file ..\SourceFile\System\OS\os_a.asm
+
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+OsCurrentPriority 00000000
+
+Symbol: OsCurrentPriority
+   Definitions
+      At line 10 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 102 in file ..\SourceFile\System\OS\os_a.asm
+Comment: OsCurrentPriority used once
+OsCurrentTaskPointer 00000000
+
+Symbol: OsCurrentTaskPointer
+   Definitions
+      At line 12 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 96 in file ..\SourceFile\System\OS\os_a.asm
+      At line 107 in file ..\SourceFile\System\OS\os_a.asm
+
+OsHighReadyPriority 00000000
+
+Symbol: OsHighReadyPriority
+   Definitions
+      At line 11 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 103 in file ..\SourceFile\System\OS\os_a.asm
+Comment: OsHighReadyPriority used once
+OsHighReadyTaskPointer 00000000
+
+Symbol: OsHighReadyTaskPointer
+   Definitions
+      At line 13 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 108 in file ..\SourceFile\System\OS\os_a.asm
+Comment: OsHighReadyTaskPointer used once
+OsRunning 00000000
+
+Symbol: OsRunning
+   Definitions
+      At line 9 in file ..\SourceFile\System\OS\os_a.asm
+   Uses
+      At line 47 in file ..\SourceFile\System\OS\os_a.asm
+Comment: OsRunning used once
+5 symbols
+346 symbols in table

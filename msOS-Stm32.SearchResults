@@ -1,0 +1,9 @@
+---- PostMessageToLogicTask Matches (8 in 5 files) ----
+App.c (sourcefile\app):    PostMessageToLogicTask(KeyMessageType, data);  
+App.c (sourcefile\app):        //PostMessageToLogicTask(KeyMessageType, data); 
+Device_key.c (sourcefile\system\device):            PostMessageToLogicTask(KeyMessageType, RemapLongKey(ScanValueSave));  
+Device_key.c (sourcefile\system\device):            PostMessageToLogicTask(KeyMessageType, RemapKey(ScanValueSave));
+Device_timer.c (sourcefile\system\device):                    PostMessageToLogicTask(TimerMessageType, (uint)(Block[i].RegisterFunction));
+System.c (sourcefile\system):* º¯ÊýÃû	: PostMessageToLogicTask
+System.c (sourcefile\system):void PostMessageToLogicTask(MessageType messageType, uint data)
+System.h (sourcefile\system):extern void PostMessageToLogicTask(MessageType messageType, uint data);

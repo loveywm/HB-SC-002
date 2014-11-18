@@ -1,0 +1,9 @@
+.\output\os.o: ..\SourceFile\System\OS\os.c
+.\output\os.o: ..\SourceFile\System\system.h
+.\output\os.o: C:\Keil\ARM\ARMCC\bin\..\include\string.h
+.\output\os.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\output\os.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\output\os.o: C:\Keil\ARM\ARMCC\bin\..\include\stdarg.h
+.\output\os.o: ..\SourceFile\System\Device\device.h
+.\output\os.o: ..\SourceFile\System\OS\os.h
+.\output\os.o: ..\SourceFile\System\GUI\gui.h

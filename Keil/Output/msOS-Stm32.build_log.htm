@@ -1,0 +1,85 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\code\HB-SC-002\Keil\msOS-Stm32.uvproj
+Project File Date:  05/05/2014
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling system.c...
+..\SourceFile\System\system.c(59): warning:  #550-D: parameter "data" was set but never used
+  void PostMessageToLogicTask(MessageType messageType, uint data)
+..\SourceFile\System\system.c: 1 warning, 0 errors
+linking...
+Program Size: Code=8212 RO-data=284 RW-data=204 ZI-data=4340  
+FromELF: creating hex file...
+".\Output\HB-SC-002.axf" - 0 Error(s), 1 Warning(s).
+</pre>
+</body>
+</html>
+evice_adc.c...
+compiling device_usart.c...
+compiling device_systick.c...
+".\Output\HB-SC-002.axf" - 1 Error(s), 0 Warning(s).
+Target not created
+urceFile\App\logic.c(101): warning:  #177-D: variable "Counter" was declared but never referenced
+  static byte Counter = 0;
+..\SourceFile\App\logic.c: 1 warning, 3 errors
+".\Output\HB-SC-002.axf" - 3 Error(s), 1 Warning(s).
+Target not created
+ if (App.Menu.FocusFormPointer->FocusTextBoxDataPointer == null) return;
+..\SourceFile\App\logic.c(66): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write((uint *)App.Menu.FocusFormPointer->FocusTextBoxDataPointer);
+..\SourceFile\App\logic.c(66): error:  #136: struct "<unnamed>" has no field "Menu"
+      System.Device.Storage.Parameter.Write((uint *)App.Menu.FocusFormPointer->FocusTextBoxDataPointer);
+..\SourceFile\App\logic.c(101): warning:  #177-D: variable "Counter" was declared but never referenced
+  static byte Counter = 0;
+..\SourceFile\App\logic.c: 1 warning, 8 errors
+".\Output\HB-SC-002.axf" - 8 Error(s), 1 Warning(s).
+Target not created
+ce.Storage.Parameter.Write(&App.Data.PowerPercent);
+..\SourceFile\App\logic.c(84): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write(&App.Data.MaxPower);
+..\SourceFile\App\logic.c(85): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write((uint *)(&App.Data.MaxTemperature));
+..\SourceFile\App\logic.c(86): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write(&App.Data.MaxFrequency);
+..\SourceFile\App\logic.c(87): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write(&App.Data.MaxFrequencyOffset);
+..\SourceFile\App\logic.c(88): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write(&App.Data.MinStream);
+..\SourceFile\App\logic.c(90): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write(&App.Data.SerialNumber);
+..\SourceFile\App\logic.c(91): error:  #136: struct "Device" has no field "Storage"
+      System.Device.Storage.Parameter.Write(&App.Data.ProductionDate);
+..\SourceFile\App\logic.c(111): warning:  #177-D: variable "Counter" was declared but never referenced
+  static byte Counter = 0;
+..\SourceFile\App\logic.c: 1 warning, 17 errors
+".\Output\HB-SC-002.axf" - 17 Error(s), 1 Warning(s).
+Target not created
+usFormPointer = &App.Menu.WorkForm;
+..\SourceFile\App\logic.c(108): error:  #136: struct "<unnamed>" has no field "Menu"
+      App.Menu.FocusFormPointer = &App.Menu.WorkForm;
+..\SourceFile\App\logic.c(130): error:  #136: struct "<unnamed>" has no field "Gui"
+              System.Gui.Form.SwitchTextBoxFocus();
+..\SourceFile\App\logic.c(140): error:  #136: struct "<unnamed>" has no field "Gui"
+              System.Gui.Form.SetTextBoxData(key);
+..\SourceFile\App\logic.c(111): warning:  #177-D: variable "Counter" was declared but never referenced
+  static byte Counter = 0;
+..\SourceFile\App\logic.c: 1 warning, 22 errors
+".\Output\HB-SC-002.axf" - 22 Error(s), 1 Warning(s).
+Target not created
+cusFormPointer = &App.Menu.CheckForm;   
+..\SourceFile\App\logic.c(178): error:  #136: struct "<unnamed>" has no field "Menu"
+      App.Menu.FocusFormPointer = &App.Menu.CheckForm;   
+..\SourceFile\App\logic.c(182): error:  #136: struct "<unnamed>" has no field "Menu"
+          App.Menu.CheckForm.ChartPointer->Column[i] = i % 5;
+..\SourceFile\App\logic.c(184): error:  #136: struct "<unnamed>" has no field "Menu"
+      App.Menu.FocusFormPointer = &App.Menu.WorkForm;   
+..\SourceFile\App\logic.c(184): error:  #136: struct "<unnamed>" has no field "Menu"
+      App.Menu.FocusFormPointer = &App.Menu.WorkForm;   
+..\SourceFile\App\logic.c: 0 warnings, 28 errors
+".\Output\HB-SC-002.axf" - 28 Error(s), 0 Warning(s).
+Target not created

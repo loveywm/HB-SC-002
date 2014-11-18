@@ -1,0 +1,9 @@
+.\output\device_rtc.o: ..\SourceFile\System\Device\device_rtc.c
+.\output\device_rtc.o: ..\SourceFile\System\system.h
+.\output\device_rtc.o: C:\Keil\ARM\ARMCC\bin\..\include\string.h
+.\output\device_rtc.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\output\device_rtc.o: C:\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\output\device_rtc.o: C:\Keil\ARM\ARMCC\bin\..\include\stdarg.h
+.\output\device_rtc.o: ..\SourceFile\System\Device\device.h
+.\output\device_rtc.o: ..\SourceFile\System\OS\os.h
+.\output\device_rtc.o: ..\SourceFile\System\GUI\gui.h
