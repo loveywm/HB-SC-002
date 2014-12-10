@@ -74,27 +74,27 @@ typedef void (*function)(void);
 #define invalid             0xFF
 
 
-#define Input_invalid                 0xFFFF
+#define Input_invalid                 0x0
 
-#define Input_invalid_1             0xFFFE
-#define Input_invalid_2             0xFFFD
-#define Input_invalid_3             0xFFFB
-#define Input_invalid_4             0xFFF7
+#define Input_invalid_1             0x0001
+#define Input_invalid_2             0x0002
+#define Input_invalid_3             0x0004
+#define Input_invalid_4             0x0008
 
-#define Input_invalid_5             0xFFEF
-#define Input_invalid_6             0xFFDF
-#define Input_invalid_7             0xFFBF
-#define Input_invalid_8             0xFF7F
+#define Input_invalid_5             0x0010
+#define Input_invalid_6             0x0020
+#define Input_invalid_7             0x0040
+#define Input_invalid_8             0x0080
 
-#define Input_invalid_9             0xFEFF
-#define Input_invalid_10             0xFDFF
-#define Input_invalid_11             0xFBFF
-#define Input_invalid_12             0xF7FF
+#define Input_invalid_9             0x0100
+#define Input_invalid_10             0x0200
+#define Input_invalid_11             0x0400
+#define Input_invalid_12             0x0800
 
-#define Input_invalid_13             0xEFFF
-#define Input_invalid_14             0xDFFF
-#define Input_invalid_15             0xBFFF
-#define Input_invalid_16             0x7FFF
+#define Input_invalid_13             0x1000
+#define Input_invalid_14             0x2000
+#define Input_invalid_15             0x4000
+#define Input_invalid_16             0x8000
 
 
 
@@ -248,10 +248,10 @@ typedef struct
                         u16  (*Scan_External_Input_Value)(void);
                 }IO;
 
-        struct Adc
-        {
-            void (*Register)(AdcChannelEnum adcChannel, ushort * dataPointer);
-        }Adc;
+                struct Adc
+                {
+                        void (*Register)(AdcChannelEnum adcChannel, ushort * dataPointer);
+                }Adc;
           
         struct Usart1
         {

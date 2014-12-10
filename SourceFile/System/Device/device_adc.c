@@ -1,21 +1,7 @@
 /*
 ********************************************************************************
 *                                嵌入式微系统
-*                                   msOS
-*
-*                            硬件平台:msPLC DEMO
-*                          主芯片:STM32F103R8T6/RBT6
-*                           深圳市雨滴科技有限公司
-*
-*                                作者:王绍伟
-*                                网名:凤舞天
-*                                标识:Wangsw
-*
-*                                QQ:26033613
-*                               QQ群:291235815
-*                        淘宝店:http://52edk.taobao.com
-*                      论坛:http://gongkong.eefocus.com/bbs/
-*                博客:http://forum.eet-cn.com/BLOG_wangsw317_1268.HTM
+*                         
 ********************************************************************************
 *文件名     : device_adc.c
 *作用       : ADC设备
@@ -69,48 +55,49 @@ void AdcSystick10000Routine(void)
 {
     static byte Counter = 0;
     
-    while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));
+    while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC));//等待转换结束
     *RegisterPointerBlock[Counter] = ADC_GetConversionValue(ADC1);
 
-    if (++Counter > 3) Counter = 0;
+    //if (++Counter > 3) Counter = 0;
     
-    ADC_RegularChannelConfig(ADC1,Counter + 10, 1 , ADC_SampleTime_239Cycles5);
+    ADC_RegularChannelConfig(ADC1,0,1,ADC_SampleTime_239Cycles5);//设置规则序列通道以及采样周期
 
-    ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+    ADC_SoftwareStartConvCmd(ADC1, ENABLE);//使能指定的 ADC1 的软件转换启动功能
 }
 
 void InitializeAdc(void)
 {
         GPIO_InitTypeDef GPIO_InitStructure;
         ADC_InitTypeDef ADC_InitStructure;
-    
-        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_ADC1, ENABLE);
-        RCC_ADCCLKConfig(RCC_PCLK2_Div6);
-        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3;
+
+        //使用ADC1的通道0,对应的是PA0
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_ADC1, ENABLE);
+        RCC_ADCCLKConfig(RCC_PCLK2_Div6);//设置分频因子位 6，时钟为 72/6=12MHz
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
-        GPIO_Init(GPIOC, &GPIO_InitStructure);
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-        ADC_DeInit(ADC1);
+        ADC_DeInit(ADC1);//ADC 时钟复位
 
-        ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
-        ADC_InitStructure.ADC_ScanConvMode = DISABLE;
-        ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
-        ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
-        ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-        ADC_InitStructure.ADC_NbrOfChannel = 1;
+        ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;//ADC 的模式:独立模式
+        ADC_InitStructure.ADC_ScanConvMode = DISABLE;//设置是否开启扫描模式
+        ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;//设置是否开启连续转换模式
+        ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;//设置启动规则转换组转换的外部事件
+        ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;//设置 ADC 数据对齐方式是左对齐还是右对齐
+        ADC_InitStructure.ADC_NbrOfChannel = 1;//顺序进行规则转换的 ADC 通道的数目 1
         ADC_Init(ADC1, &ADC_InitStructure);
 
-        ADC_Cmd(ADC1, ENABLE);
+        ADC_Cmd(ADC1, ENABLE);//使能指定的 ADC1
 
-        ADC_ResetCalibration(ADC1);
+        ADC_ResetCalibration(ADC1);//执行复位校准
 
-        while(ADC_GetResetCalibrationStatus(ADC1));
+        while(ADC_GetResetCalibrationStatus(ADC1));//等待复位校准结束
 
-        ADC_StartCalibration(ADC1);
+        ADC_StartCalibration(ADC1);//开始指定 ADC1 的校准状态
 
-        while(ADC_GetCalibrationStatus(ADC1));
+        while(ADC_GetCalibrationStatus(ADC1));//等待校 AD 准结束
 
-        ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+        ADC_SoftwareStartConvCmd(ADC1, ENABLE);//使能指定的 ADC1 的软件转换启动功能
 
         System.Device.Adc.Register = Register;
 }

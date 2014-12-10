@@ -11,6 +11,8 @@ extern void InitializeRtc(void);
 extern void InitializeTimer(void);
 
 extern void InitializeUsart(void);
+extern void InitializeUsart2(void);
+extern void InitializeUsart3(void);
 
 extern void InitializeSystick(void);
 
@@ -37,15 +39,15 @@ void InitializeDevice(void)
 {
     RCC->APB2ENR |=  RCC_APB2Periph_GPIOA \
                     |RCC_APB2Periph_GPIOB \
-                    |RCC_APB2Periph_GPIOC \
-                    |RCC_APB2Periph_GPIOD \
-                    |RCC_APB2Periph_GPIOE \
-                    |RCC_APB2Periph_GPIOF \
-                    |RCC_APB2Periph_GPIOG\
+                    |RCC_APB2Periph_GPIOC     
                     |RCC_APB2Periph_AFIO;
 
-    InitializeUsart();	
+        InitializeUsart();	
+        
+        //InitializeUsart2();	
+        InitializeUsart3();
 
+        
     //InitializeKey();	
 
     //InitializeLcd();

@@ -16,7 +16,7 @@ static void HB_GPIO_Set_Value(u8 HB_Gpio_type,u8 HB_Gpio_Value)
 static u8 HB_GPIO_Get_Value(u8 HB_Gpio_type)
 {
 
-        System.Device.IO.HB_Gpio_Get_Value(HB_Gpio_type);
+        return System.Device.IO.HB_Gpio_Get_Value(HB_Gpio_type);
 
 }
 
@@ -73,16 +73,71 @@ void    HB_LED_State(u8 Led_Error)
                         HB_GPIO_Set_Value(LED18,LED_VALUE_FALSE);
                         break;
                 case   LED_ERR_7:
-
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_FALSE);
                         break;
                 case   LED_ERR_8:
-
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
                         break;
                 case   LED_ERR_9:
-
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
                         break;
                 case   LED_ERR_10:
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
+                        break;
+                   case   LED_ERR_11:
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
+                        break;
+                            case   LED_ERR_12:
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
+                        break;
+                            case   LED_ERR_13:
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
+                        break;
+                            case   LED_ERR_14:
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_FALSE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
+                        break;
+                            case   LED_ERR_15:
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
+                        break;
 
+
+
+
+
+
+                        
+                case   LED_ERR_16:
+                        HB_GPIO_Set_Value(LED15,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED16,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED17,LED_VALUE_TRUE);
+                        HB_GPIO_Set_Value(LED18,LED_VALUE_TRUE);
                         break;
                 
                 default:
@@ -132,9 +187,16 @@ void    HB_Relay_Cmd(u8 Relay,u8 Realy_Value)
 u16     Scan_Input_Value(void)
 {
 
-        u16     ScanValue;
+        u16     ScanValue,ScanValue_1;
         ScanValue = System.Device.IO.Scan_External_Input_Value();
-        return  ScanValue;
+        DelayMs(10);
+        ScanValue_1= System.Device.IO.Scan_External_Input_Value();
+
+        if(ScanValue == ScanValue_1)
+        {
+                App.Input_Data = ScanValue;
+        }
+        return 0;
 }
 
 

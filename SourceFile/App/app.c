@@ -2,6 +2,12 @@
 #include "system.h"
 #include "app.h"
 
+#include "stm32f10x_gpio.h"
+
+
+#define N_ADC   32
+
+
 #define IdentifyNumberAddress  0x1FFFF7E8
 
 #define LogicTaskStackSum   400             //业务逻辑任务栈深度
@@ -13,6 +19,11 @@ uint  MenuTaskStack[MenuTaskStackSum];      //菜单界面任务栈数组
 void * LogicTaskMessageQueue[40];           //业务逻辑消息队列
 
 AppStruct App;
+
+unsigned char  fram_data_buff[MAX_FRAM_LEN];////这个数组保存得到的一个掐头去尾的报文帧
+unsigned char  fram_len = 0;
+//u8 weight_tmp_flag = 0;//临时计算重量是否相等的计数标志
+u8  RT_Send_Flag = 0;//实时数据是否发送的标志
 
 /*******************************************************************************
 * 函数名	: SystemTickRoutine
@@ -28,7 +39,44 @@ static void SystickRoutine(void)
     //回调函数，10ms一次被系统时钟调用
 
         //10ms检测一下16状态值，跟新保存到对应的全局变量里
-        App.Input_Data = Scan_Input_Value();
+        //App.Input_Data = Scan_Input_Value();
+
+        //HB_Send_ErrorAndWeight(App.Input_Data,App.Weight);
+                if(Rcv_Cmd() == 1)
+                {
+			if(fram_data_buff[0] == CMD_RELAY_UP)
+			{
+				HB_Relay_Cmd(RELAY_1,RELAY_ON);
+                                    HB_Relay_Cmd(RELAY_2,RELAY_OFF);
+                                    HB_Relay_Cmd(RELAY_4,RELAY_OFF);
+                
+                                    //DelayMs(500);
+                                    //HB_Relay_Cmd(RELAY_1,RELAY_OFF);
+                                    //DelayMs(500);
+			}
+                           else if(fram_data_buff[0] == CMD_RELAY_DOWN)
+                           {
+                                    HB_Relay_Cmd(RELAY_1,RELAY_OFF);
+                                    HB_Relay_Cmd(RELAY_2,RELAY_ON);
+                                    HB_Relay_Cmd(RELAY_4,RELAY_OFF);
+                                    //DelayMs(500);
+                                    //HB_Relay_Cmd(RELAY_2,RELAY_OFF);
+                                    //DelayMs(500);
+				
+                           }
+                           else if(fram_data_buff[0] == CMD_RELAY_STOP)
+                           {
+                                    HB_Relay_Cmd(RELAY_1,RELAY_OFF);
+                                    HB_Relay_Cmd(RELAY_2,RELAY_OFF);
+                                    HB_Relay_Cmd(RELAY_4,RELAY_ON);
+                                    //DelayMs(500);
+                                    //HB_Relay_Cmd(RELAY_3,RELAY_OFF);
+                                    //DelayMs(500);
+                           }
+			
+		}
+
+        
 }
 
 
@@ -65,60 +113,8 @@ static void Usart3RxdFunction(byte data)
 *******************************************************************************/
 void InitializeData(void)
 {
-    /*
-    ParameterStruct parameter;
-    LogStruct log;
 
-    log = System.Device.Storage.Log.Profile();
-    printf("\n日志总存储空间 = %d", log.Space);
-    printf("\n日志已存储空间  = %d", log.Size);
-    printf("\n日志读取点 = %x", (uint)(log.ReadPointer));
-    printf("\n日志写入点 = %x", (uint)(log.WritePointer));
-    
-    parameter = System.Device.Storage.Parameter.Profile();
-
-    printf("\n\n参数总存储空间 = %d", parameter.Space);
-    printf("\n参数已存储空间  = %d", parameter.Size);
-    printf("\n参数存储个数 = %d\n", parameter.Entries);
-    
-    if (parameter.Entries < parameter.Size)
-    {
-        System.Device.Storage.Parameter.Clean(parameter);
-    }
-    
-    App.Data.Frequency = 900000;
-    System.Device.Storage.Parameter.Read(&App.Data.Frequency);
-    App.Data.PowerPercent = 20;
-    System.Device.Storage.Parameter.Read(&App.Data.PowerPercent);
-
-    App.Data.MaxPower = 6000;
-    System.Device.Storage.Parameter.Read(&App.Data.MaxPower);
-    App.Data.MaxTemperature = 50;
-    System.Device.Storage.Parameter.Read(&App.Data.MaxTemperature);
-    App.Data.MaxFrequency = 980000;
-    System.Device.Storage.Parameter.Read(&App.Data.MaxFrequency);
-    App.Data.MaxFrequencyOffset = 100000;
-    System.Device.Storage.Parameter.Read(&App.Data.MaxFrequencyOffset);
-    App.Data.MinStream = 50;
-    System.Device.Storage.Parameter.Read(&App.Data.MinStream);
-
-    App.Data.SerialNumber = 0;
-    System.Device.Storage.Parameter.Read(&App.Data.SerialNumber);
-    App.Data.ProductionDate = (13 << 16) + (8 << 8) + 28;
-    System.Device.Storage.Parameter.Read(&App.Data.ProductionDate);
-
-
-    App.Data.Power = 6000;
-    App.Data.Voltage = 99;
-    App.Data.Current = 101;
-    App.Data.Temperature = 25;
-    App.Data.State = 1;
-
-    App.Data.IdentifyNumber0 = GetUintFrom(IdentifyNumberAddress);
-    App.Data.IdentifyNumber1 = GetUintFrom(IdentifyNumberAddress + 4);
-    App.Data.IdentifyNumber2 = GetUintFrom(IdentifyNumberAddress + 8);
-
-    */
+        App.Weight = 0x0;
 }
 
 /*******************************************************************************
@@ -136,18 +132,66 @@ void InitializeData(void)
 *******************************************************************************/
 static void InitializeApp(void)
 {
-    InitializeData();
+        InitializeData();
     
-    //InitializeMenu();
+        //InitializeMenu();
 
-    System.Device.Systick.Register(Systick100, SystickRoutine);
+        System.Device.Systick.Register(Systick100, SystickRoutine);
 
-    System.Device.Adc.Register(AdcChannel0, (ushort *)(&App.Data.Voltage));
-    System.Device.Adc.Register(AdcChannel1, (ushort *)(&App.Data.Current));
+        System.Device.Adc.Register(AdcChannel0, (ushort *)(&App.Weight));
+        //System.Device.Adc.Register(AdcChannel1, (ushort *)(&App.Data.Current));
 
-    System.Device.Usart1.RxdRegister(Usart1RxdFunction);
+        //System.Device.Usart1.RxdRegister(Usart1RxdFunction);
 
-    System.Device.Usart3.RxdRegister(Usart3RxdFunction);
+        System.Device.Usart3.RxdRegister(Usart3RxdFunction);
+}
+
+//AD算术平均值数字滤波
+u16 ADC_Filter(void)
+{
+        u32 sum=0;
+        u16 count;
+        for (count=0;count<N_ADC;count++)
+        {
+                sum+=(u16)App.Weight;
+                DelayMs(1);
+        }
+        return (u16)(sum/N_ADC);
+}
+
+
+//中值滤波算法:采集32个，去掉前8个和后8个，取中间的16个值的平均值
+u16  ADC_Filter_1(void)
+{
+        u32 sum=0;
+        u16 value_buff[N_ADC];            //定义存储数据的数组
+        u16 count,i,j,temp;
+        for(count=0;count<N_ADC;count++)  //获取数据
+        {
+                value_buff[count] = (u16)App.Weight;
+                DelayMs(1);
+                //delay();                 //如果采集数据比较慢，那么就需要延时或中断
+        }
+
+        for(i=0;i<N_ADC;i++)            //用冒泡法对数据进行排序，当然最好用其他排序方法
+        {
+                for ( j = i; j < N_ADC; j++)
+                {
+                        if(value_buff[i]>value_buff[j])
+                        {
+                                temp=value_buff[i];
+                                value_buff[i]=value_buff[j];
+                                value_buff[j]=temp;
+                        }
+                }      
+        }
+         for (count=8;count<N_ADC-8;count++)//取中间16个的和
+        {
+                sum+=value_buff[count];
+        }
+         
+        return (u16)(sum/(N_ADC-16));
+        
 }
 
 
@@ -168,29 +212,24 @@ static void InitializeApp(void)
 *******************************************************************************/
 int main(void) 
 {            
+      
         
         System.Initialize();                                                //初始化系统层
         
-        InitializeApp();                                                    //初始化应用层
+        InitializeApp(); 	//初始化应用层
 
-
-
+        HB_LED_State(LED_ERR_16);
         while(1)
         {
 
-               if(App.Input_Data != Input_invalid)
-                {
-                        //串口将这个值发送到服务端
-                        
-               } 
-
-                //将adc值发送到服务端
+                Scan_Input_Value();
 
 
-                //将坐标值发送到服务端
+                App.Weight_Send = ADC_Filter_1();//这里面大约延时了一段时间32ms
 
-
-                //接收服务端数据
+      
+                HB_Send_ErrorAndWeight(App.Input_Data,App.Weight_Send);
+                
 
         }
                                                         //创建业务逻辑任务，最高优先级0 

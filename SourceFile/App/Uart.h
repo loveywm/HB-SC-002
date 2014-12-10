@@ -19,6 +19,8 @@ enum{
         CMD_RT_DATA=0x01,//实时上传重量和16路接口错误代码
         CMD_LEVELING_DATA,//平层传平层的值
 
+        
+
 
         //继电器控制的上，下，停止三个转太
         CMD_RELAY_UP,
@@ -28,12 +30,12 @@ enum{
 };
 
 
+#define         CMD_RT_DATA_LEN         6
 
-
-void Usart3RxDataTOApp(byte data);
-unsigned char   Rcv_GPRS_Cmd(void);
-
-
+extern void Usart3RxDataTOApp(byte data);
+//extern  unsigned char Rcv_GPRS_Cmd(void);
+void HB_Send_ErrorAndWeight(u16 error,u32 weight);
+unsigned char   Rcv_Cmd(void);
 
 #endif
 

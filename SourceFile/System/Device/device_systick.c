@@ -1,22 +1,6 @@
 /*
 ********************************************************************************
-*                                嵌入式微系统
-*                                   msOS
-*
-*                            硬件平台:msPLC DEMO
-*                          主芯片:STM32F103R8T6/RBT6
-*                           深圳市雨滴科技有限公司
-*
-*                                作者:王绍伟
-*                                网名:凤舞天
-*                                标识:Wangsw
-*
-*                                QQ:26033613
-*                               QQ群:291235815
-*                        淘宝店:http://52edk.taobao.com
-*                      论坛:http://gongkong.eefocus.com/bbs/
-*                博客:http://forum.eet-cn.com/BLOG_wangsw317_1268.HTM
-********************************************************************************
+*                            ********
 *文件名     : device_systick.c
 *作用       : 系统节拍
 *原理       : 
@@ -205,7 +189,7 @@ void SysTick_Handler(void)
         case 98:
             UsartSystick1000Routine();
             Usart3Systick1000Routine();
-            TimerSystick1000Routine();
+            //TimerSystick1000Routine();
             break;
 
         case 1:
@@ -234,7 +218,7 @@ void SysTick_Handler(void)
             break;  
             
         case 97:
-            RtcSystick100Routine();
+            //RtcSystick100Routine();
             break;
         case 99:
             //KeySystick100Routine();

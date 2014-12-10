@@ -158,8 +158,8 @@ void KeySystick100Routine(void)
 {
     byte scanValue;
 
-    if (KeyBeepCounter == 1) 
-        System.Device.IO.SetBeep(false);
+//    if (KeyBeepCounter == 1) 
+//        System.Device.IO.SetBeep(false);
     
     if (KeyBeepCounter > 0) KeyBeepCounter--;
 
@@ -184,14 +184,14 @@ void KeySystick100Routine(void)
         if (ScanCounter == LongInterval) 
         {
             PostMessageToLogicTask(KeyMessageType, RemapLongKey(ScanValueSave));  
-            System.Device.IO.SetBeep(true);
+//            System.Device.IO.SetBeep(true);
             KeyBeepCounter = KeyBeepInterval;
             DoubleHitCounter = DoubleHitInterval;
         } 
         else if (ScanCounter > ShortInterval) 
         {
             PostMessageToLogicTask(KeyMessageType, RemapKey(ScanValueSave));
-            System.Device.IO.SetBeep(true);
+//            System.Device.IO.SetBeep(true);
             KeyBeepCounter = KeyBeepInterval;
             DoubleHitCounter = DoubleHitInterval;
         }

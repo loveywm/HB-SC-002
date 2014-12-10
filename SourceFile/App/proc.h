@@ -1,7 +1,7 @@
 #ifndef _PROC_H_
 #define _PROC_H_
 
-
+//#include "app.h"
 
 #define         LED_VALUE_TRUE        1
 #define         LED_VALUE_FALSE       0
@@ -23,7 +23,15 @@ enum{
         LED_ERR_8,        
         LED_ERR_9,        
         LED_ERR_10,        
-        LED_ERR_11,        
+        LED_ERR_11,      
+
+        LED_ERR_12,
+        LED_ERR_13,
+        LED_ERR_14,
+        LED_ERR_15,
+       
+        
+        LED_ERR_16,
 
         //6路继电器标志
         RELAY_1,
@@ -36,7 +44,8 @@ enum{
 };
 
 
-void    HB_LED_State(u8 Led_Error);
-void    HB_Relay_Cmd(u8 Relay,u8 Realy_Value);
+extern void    HB_LED_State(u8 Led_Error);
+extern void    HB_Relay_Cmd(u8 Relay,u8 Realy_Value);
+extern u16     Scan_Input_Value(void);
 
 #endif /*PROC_H_*/

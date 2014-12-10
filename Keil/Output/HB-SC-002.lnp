@@ -1,5 +1,7 @@
 --cpu Cortex-M3
 ".\output\app.o"
+".\output\uart.o"
+".\output\proc.o"
 ".\output\system.o"
 ".\output\device.o"
 ".\output\device_key.o"

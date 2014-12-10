@@ -69,7 +69,7 @@ static void HB_Gpio_Set_Value(u8 HB_Gpio_type,u8 HB_Gpio_Value)
                 //四个led灯
                 case    LED15:
                         PcOut(0) = HB_Gpio_Value; 
-                        break
+                        break;
                 case    LED16:
                         PcOut(1) = HB_Gpio_Value; 
                         break;
@@ -178,39 +178,39 @@ static u16     Scan_External_Input_Value(void)
 	
         scanValue = Input_invalid;
         if(PbIn(9) == 0)
-                scanValue &= Input_invalid_1;
+                scanValue |= Input_invalid_1;
         if(PbIn(8) == 0)
-                scanValue &= Input_invalid_2;
+                scanValue |= Input_invalid_2;
         if(PbIn(7) == 0)
-                scanValue &= Input_invalid_3;
+                scanValue |= Input_invalid_3;
         if(PbIn(6) == 0)
-                scanValue &= Input_invalid_4;
+                scanValue |= Input_invalid_4;
         if(PbIn(5) == 0)
-                scanValue &= Input_invalid_5;
+                scanValue |= Input_invalid_5;
         if(PcIn(12) == 0)
-                scanValue &= Input_invalid_6;
+                scanValue |= Input_invalid_6;
 
         if(PcIn(11) == 0)
-                scanValue &= Input_invalid_7;
+                scanValue |= Input_invalid_7;
         if(PcIn(10) == 0)
-                scanValue &= Input_invalid_8;
+                scanValue |= Input_invalid_8;
         if(PcIn(9) == 0)
-                scanValue &= Input_invalid_9;
+                scanValue |= Input_invalid_9;
         if(PcIn(8) == 0)
-                scanValue &= Input_invalid_10;
+                scanValue |= Input_invalid_10;
         if(PcIn(7) == 0)
-                scanValue &= Input_invalid_11;
+                scanValue |= Input_invalid_11;
         if(PcIn(6) == 0)
-                scanValue &= Input_invalid_12;
+                scanValue |= Input_invalid_12;
 
         if(PbIn(15) == 0)
-                scanValue &= Input_invalid_13;
+                scanValue |= Input_invalid_13;
         if(PbIn(14) == 0)
-                scanValue &= Input_invalid_14;
+                scanValue |= Input_invalid_14;
         if(PbIn(13) == 0)
-                scanValue &= Input_invalid_15;
+                scanValue |= Input_invalid_15;
         if(PbIn(12) == 0)
-                scanValue &= Input_invalid_16;
+                scanValue |= Input_invalid_16;
 
 
         return scanValue;
@@ -246,25 +246,20 @@ void InitializeIO(void)
 {
         GPIO_InitTypeDef GPIO_InitStructure;
 	
-        //GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_1;
-        //GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-        //GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
-        //GPIO_Init(GPIOA, &GPIO_InitStructure);
-        //BeepPin = 0;    
-
-
         //loveywm 20141114
         //四个LED灯的IO口初始化
         //C0=led1......C1=led2.....C2=led3.....C3=led4
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
+        
         GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3;
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
         GPIO_Init(GPIOC, &GPIO_InitStructure);
         
-        PaOut(0) = 0;
-        PaOut(1) = 0;
-        PaOut(2) = 0;
-        PaOut(3) = 0;
+        PcOut(0) = 0;
+        PcOut(1) = 0;
+        PcOut(2) = 0;
+        PcOut(3) = 0;
 
 
 
@@ -275,6 +270,8 @@ void InitializeIO(void)
         //A7===P4
         //C4===P5
         //C5===P6
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC,ENABLE);
         GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;
         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
@@ -333,7 +330,7 @@ void InitializeIO(void)
 
         
     
-        System.Device.IO.SetBeep = SetBeep;
+//        System.Device.IO.SetBeep = SetBeep;
 
         System.Device.IO.Set_Led_Value = Set_Led_Value;
         System.Device.IO.Set_Relay_Value = Set_Relay_Value;
