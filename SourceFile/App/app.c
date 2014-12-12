@@ -36,7 +36,7 @@ u8  RT_Send_Flag = 0;//实时数据是否发送的标志
 *******************************************************************************/
 static void SystickRoutine(void) 
 {
-    //回调函数，10ms一次被系统时钟调用
+    //回调函数，1ms一次被系统时钟调用
 
         //10ms检测一下16状态值，跟新保存到对应的全局变量里
         //App.Input_Data = Scan_Input_Value();
@@ -136,7 +136,9 @@ static void InitializeApp(void)
     
         //InitializeMenu();
 
-        System.Device.Systick.Register(Systick100, SystickRoutine);
+        System.Device.Systick.Register(Systick1000, SystickRoutine);
+      
+    
 
         System.Device.Adc.Register(AdcChannel0, (ushort *)(&App.Weight));
         //System.Device.Adc.Register(AdcChannel1, (ushort *)(&App.Data.Current));
