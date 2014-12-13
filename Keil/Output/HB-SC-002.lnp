@@ -21,6 +21,8 @@
 ".\output\stm32f10x_rcc.o"
 ".\output\stm32f10x_flash.o"
 ".\output\stm32f10x_adc.o"
+".\output\stm32f10x_tim.o"
+".\output\device_encoder.o"
 --library_type=microlib --strict --scatter ".\Output\HB-SC-002.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

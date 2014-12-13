@@ -280,7 +280,10 @@ typedef struct
             bool (*WriteByte)(byte data);
             //void (*Write)(byte * dataPointer, int sum);
         }Usart3;
-        
+        struct Encoder
+        {
+            unsigned short(*Enc_GetCount)(void);
+        }Encoder;
         struct Timer
         {
             byte (*Start)(TimerhandleModeEnum mode, uint delay, function registerFunction);

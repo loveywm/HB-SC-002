@@ -5,6 +5,7 @@
 extern void InitializeKey(void);
 
 //extern void InitializeLcd(void);
+extern void InitializeEncoder(void);
 
 extern void InitializeRtc(void);
 
@@ -42,7 +43,7 @@ void InitializeDevice(void)
                     |RCC_APB2Periph_GPIOC     
                     |RCC_APB2Periph_AFIO;
 
-        InitializeUsart();	
+        //InitializeUsart();	
         
         //InitializeUsart2();	
         InitializeUsart3();
@@ -53,14 +54,15 @@ void InitializeDevice(void)
     //InitializeLcd();
 
     InitializeRtc();
-
-    InitializeTimer();
-
+    
     InitializeIO();
+    
+    InitializeTimer();
 
     InitializeAdc();
 
     //InitializeStorage();
+    InitializeEncoder();
 
     InitializeSystick();
 

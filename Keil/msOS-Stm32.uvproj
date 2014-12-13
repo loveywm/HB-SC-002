@@ -548,6 +548,16 @@
               <FileType>1</FileType>
               <FilePath>..\SourceFile\System\Device\Drive\LIB\src\stm32f10x_adc.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f10x_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SourceFile\System\Device\Drive\LIB\src\stm32f10x_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>device_encoder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SourceFile\System\Device\device_encoder.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

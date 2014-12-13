@@ -256,10 +256,10 @@ void InitializeIO(void)
         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
         GPIO_Init(GPIOC, &GPIO_InitStructure);
         
-        PcOut(0) = 0;
-        PcOut(1) = 0;
-        PcOut(2) = 0;
-        PcOut(3) = 0;
+        PcOut(0) = 1;
+        PcOut(1) = 1;
+        PcOut(2) = 1;
+        PcOut(3) = 1;
 
 
 

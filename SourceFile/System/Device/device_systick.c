@@ -28,6 +28,8 @@ extern void AdcSystick10000Routine(void);
 
 extern void SysTick_Handler(void);
 
+extern void EncoderSystick1000Routine(void);
+
 
 #define Systick10000Sum 2
 #define Systick1000Sum  4
@@ -176,6 +178,8 @@ void SysTick_Handler(void)
         case 86:
         case 96:
             Systick1000RegisterPointerBlock[3]();
+            //20141213
+            EncoderSystick1000Routine();
             break;
         case 8:
         case 18:

@@ -10,6 +10,7 @@
 .\output\device_systick.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_flash.h
 .\output\device_systick.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_gpio.h
 .\output\device_systick.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_rcc.h
+.\output\device_systick.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_tim.h
 .\output\device_systick.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_usart.h
 .\output\device_systick.o: ..\SourceFile\System\Device\Drive\LIB\inc\misc.h
 .\output\device_systick.o: ..\SourceFile\System\system.h

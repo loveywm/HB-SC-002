@@ -1,2 +1,150 @@
----- weight_tmp Matches (1 in 1 files) ----
-App.c (sourcefile\app):        u16 weight_tmp;
+---- Timer Matches (147 in 13 files) ----
+Core_cm3.h (sourcefile\system\device\drive\cmsis): * Initialise the system tick timer and its interrupt and start the
+Core_cm3.h (sourcefile\system\device\drive\cmsis): * system tick timer / counter in free running mode to generate 
+Core_cm3.h (sourcefile\system\device\drive\cmsis):                   SysTick_CTRL_ENABLE_Msk;                    /* Enable SysTick IRQ and SysTick Timer */
+Device.c (sourcefile\system\device):extern void InitializeTimer(void);
+Device.c (sourcefile\system\device):    InitializeTimer();
+Device.h (sourcefile\system\device):    TimerSystickHandle      = 0,
+Device.h (sourcefile\system\device):    TimerMessageHandle      = 1	
+Device.h (sourcefile\system\device):}TimerhandleModeEnum;	
+Device_systick.c (sourcefile\system\device):extern void TimerSystick1000Routine(void);
+Device_systick.c (sourcefile\system\device):            //TimerSystick1000Routine();
+Device_timer.c (sourcefile\system\device):*文件名     : device_timer.c
+Device_timer.c (sourcefile\system\device):}Timer;
+Device_timer.c (sourcefile\system\device):#define TimerSum		0x8
+Device_timer.c (sourcefile\system\device):static TimerhandleModeEnum Mode;
+Device_timer.c (sourcefile\system\device):static Timer Block[TimerSum];
+Device_timer.c (sourcefile\system\device):#define ENCODER_TIMER   TIM1  // Encoder unit connected to TIM3
+Device_timer.c (sourcefile\system\device):* 函数名	: TimerSystick1000Routine
+Device_timer.c (sourcefile\system\device):void TimerSystick1000Routine(void)
+Device_timer.c (sourcefile\system\device):                    PostMessageToLogicTask(TimerMessageType, (uint)(Block[i].RegisterFunction));
+Device_timer.c (sourcefile\system\device):*             data:消息值，MessageTimer类型为32bit地址,其他类型下都是24bit数据
+Device_timer.c (sourcefile\system\device):static byte Start(TimerhandleModeEnum handleMode, uint delay, function registerFunction)
+Device_timer.c (sourcefile\system\device):    for(i = 0; i < TimerSum; i++) 
+Device_timer.c (sourcefile\system\device):    Assert(id < TimerSum);
+Device_timer.c (sourcefile\system\device):void InitializeTimer(void)
+Device_timer.c (sourcefile\system\device):        /* Timer configuration in Encoder mode */
+Device_timer.c (sourcefile\system\device):        TIM_DeInit(ENCODER_TIMER);
+Device_timer.c (sourcefile\system\device):        TIM_TimeBaseInit(ENCODER_TIMER, &TIM_TimeBaseStructure);
+Device_timer.c (sourcefile\system\device):        TIM_EncoderInterfaceConfig(ENCODER_TIMER, TIM_EncoderMode_TI12, 
+Device_timer.c (sourcefile\system\device):        TIM_ICInit(ENCODER_TIMER, &TIM_ICInitStructure);
+Device_timer.c (sourcefile\system\device):        TIM_ClearFlag(ENCODER_TIMER, TIM_FLAG_Update);//清除TIM1的更新标志位
+Device_timer.c (sourcefile\system\device):        TIM_ITConfig(ENCODER_TIMER, TIM_IT_Update, ENABLE);
+Device_timer.c (sourcefile\system\device):        TIM_Cmd(ENCODER_TIMER, ENABLE);
+Device_timer.c (sourcefile\system\device):        System.Device.Timer.Start = Start;
+Device_timer.c (sourcefile\system\device):        System.Device.Timer.Stop = Stop; 
+HB-SC-002.htm (keil\output): <LI><a href="#[38]">Start</a> from device_timer.o(.text) referenced from device_timer.o(.text)
+HB-SC-002.htm (keil\output): <LI><a href="#[39]">Stop</a> from device_timer.o(.text) referenced from device_timer.o(.text)
+HB-SC-002.htm (keil\output):<BR>[Called By]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TimerSystick1000Routine
+HB-SC-002.htm (keil\output):<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<P><STRONG><a name="[76]"></a>TimerSystick1000Routine</STRONG> (Thumb, 136 bytes, Stack size 16 bytes, device_timer.o(.text), UNUSED)
+HB-SC-002.htm (keil\output):<P><STRONG><a name="[70]"></a>InitializeTimer</STRONG> (Thumb, 172 bytes, Stack size 32 bytes, device_timer.o(.text))
+HB-SC-002.htm (keil\output):<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = InitializeTimer &rArr; TIM_ICInit &rArr; TI1_Config
+HB-SC-002.htm (keil\output):<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeTimer
+HB-SC-002.htm (keil\output):<P><STRONG><a name="[38]"></a>Start</STRONG> (Thumb, 144 bytes, Stack size 12 bytes, device_timer.o(.text))
+HB-SC-002.htm (keil\output):<BR>[Address Reference Count : 1]<UL><LI> device_timer.o(.text)
+HB-SC-002.htm (keil\output):<P><STRONG><a name="[39]"></a>Stop</STRONG> (Thumb, 60 bytes, Stack size 8 bytes, device_timer.o(.text))
+HB-SC-002.htm (keil\output):<BR>[Address Reference Count : 1]<UL><LI> device_timer.o(.text)
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):  __IO uint32_t DTIMER;
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2RSTR_TIM1RST                ((uint32_t)0x00000800)        /*!< TIM1 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2RSTR_TIM15RST               ((uint32_t)0x00010000)        /*!< TIM15 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2RSTR_TIM16RST               ((uint32_t)0x00020000)        /*!< TIM16 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2RSTR_TIM17RST               ((uint32_t)0x00040000)        /*!< TIM17 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2RSTR_TIM8RST               ((uint32_t)0x00002000)        /*!< TIM8 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2RSTR_TIM9RST               ((uint32_t)0x00080000)         /*!< TIM9 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2RSTR_TIM10RST              ((uint32_t)0x00100000)         /*!< TIM10 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2RSTR_TIM11RST              ((uint32_t)0x00200000)         /*!< TIM11 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB1RSTR_TIM2RST                ((uint32_t)0x00000001)        /*!< Timer 2 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB1RSTR_TIM3RST                ((uint32_t)0x00000002)        /*!< Timer 3 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM4RST               ((uint32_t)0x00000004)        /*!< Timer 4 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM5RST                ((uint32_t)0x00000008)        /*!< Timer 5 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM6RST                ((uint32_t)0x00000010)        /*!< Timer 6 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM7RST                ((uint32_t)0x00000020)        /*!< Timer 7 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM6RST                ((uint32_t)0x00000010)        /*!< Timer 6 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM7RST                ((uint32_t)0x00000020)        /*!< Timer 7 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM5RST                ((uint32_t)0x00000008)        /*!< Timer 5 reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM12RST               ((uint32_t)0x00000040)        /*!< TIM12 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM13RST               ((uint32_t)0x00000080)        /*!< TIM13 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM14RST               ((uint32_t)0x00000100)        /*!< TIM14 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM12RST               ((uint32_t)0x00000040)         /*!< TIM12 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM13RST               ((uint32_t)0x00000080)         /*!< TIM13 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1RSTR_TIM14RST               ((uint32_t)0x00000100)         /*!< TIM14 Timer reset */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2ENR_TIM1EN                  ((uint32_t)0x00000800)         /*!< TIM1 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2ENR_TIM15EN                 ((uint32_t)0x00010000)         /*!< TIM15 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2ENR_TIM16EN                 ((uint32_t)0x00020000)         /*!< TIM16 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB2ENR_TIM17EN                 ((uint32_t)0x00040000)         /*!< TIM17 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2ENR_TIM8EN                 ((uint32_t)0x00002000)         /*!< TIM8 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2ENR_TIM9EN                 ((uint32_t)0x00080000)         /*!< TIM9 Timer clock enable  */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2ENR_TIM10EN                ((uint32_t)0x00100000)         /*!< TIM10 Timer clock enable  */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB2ENR_TIM11EN                ((uint32_t)0x00200000)         /*!< TIM11 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB1ENR_TIM2EN                  ((uint32_t)0x00000001)        /*!< Timer 2 clock enabled*/
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  RCC_APB1ENR_TIM3EN                  ((uint32_t)0x00000002)        /*!< Timer 3 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM4EN                 ((uint32_t)0x00000004)        /*!< Timer 4 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM5EN                 ((uint32_t)0x00000008)        /*!< Timer 5 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM6EN                 ((uint32_t)0x00000010)        /*!< Timer 6 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM7EN                 ((uint32_t)0x00000020)        /*!< Timer 7 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM6EN                 ((uint32_t)0x00000010)        /*!< Timer 6 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM7EN                 ((uint32_t)0x00000020)        /*!< Timer 7 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM5EN                 ((uint32_t)0x00000008)        /*!< Timer 5 clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM12EN                ((uint32_t)0x00000040)         /*!< TIM12 Timer clock enable  */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM13EN                ((uint32_t)0x00000080)         /*!< TIM13 Timer clock enable  */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM14EN                ((uint32_t)0x00000100)         /*!< TIM14 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM12EN                ((uint32_t)0x00000040)         /*!< TIM12 Timer clock enable  */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM13EN                ((uint32_t)0x00000080)         /*!< TIM13 Timer clock enable  */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis): #define  RCC_APB1ENR_TIM14EN                ((uint32_t)0x00000100)         /*!< TIM14 Timer clock enable */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  WWDG_CFR_WDGTB                      ((uint16_t)0x0180)            /*!< WDGTB[1:0] bits (Timer Base) */
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):/******************  Bit definition for SDIO_DTIMER register  *****************/
+Stm32f10x.h (sourcefile\system\device\drive\cmsis):#define  SDIO_DTIMER_DATATIME                ((uint32_t)0xFFFFFFFF)        /*!< Data timeout period. */
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T1_TRGO: Timer1 TRGO event selected (for ADC1, ADC2 and ADC3)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T1_CC4: Timer1 capture compare4 selected (for ADC1, ADC2 and ADC3)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T2_TRGO: Timer2 TRGO event selected (for ADC1 and ADC2)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T2_CC1: Timer2 capture compare1 selected (for ADC1 and ADC2)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T3_CC4: Timer3 capture compare4 selected (for ADC1 and ADC2)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T4_TRGO: Timer4 TRGO event selected (for ADC1 and ADC2)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_Ext_IT15_TIM8_CC4: External interrupt line 15 or Timer8
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T4_CC3: Timer4 capture compare3 selected (for ADC3 only)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T8_CC2: Timer8 capture compare2 selected (for ADC3 only)                         
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T8_CC4: Timer8 capture compare4 selected (for ADC3 only)
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T5_TRGO: Timer5 TRGO event selected (for ADC3 only)                         
+Stm32f10x_adc.c (sourcefile\system\device\drive\lib\src):  *     @arg ADC_ExternalTrigInjecConv_T5_CC4: Timer5 capture compare4 selected (for ADC3 only)                        
+Stm32f10x_sdio.c (sourcefile\system\device\drive\lib\src):  SDIO->DTIMER = 0x00000000;
+Stm32f10x_sdio.c (sourcefile\system\device\drive\lib\src):/*---------------------------- SDIO DTIMER Configuration ---------------------*/
+Stm32f10x_sdio.c (sourcefile\system\device\drive\lib\src):  SDIO->DTIMER = SDIO_DataInitStruct->SDIO_DataTimeOut;
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_Update: Timer update Event source
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_CC1: Timer Capture Compare 1 Event source
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_CC2: Timer Capture Compare 2 Event source
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_CC3: Timer Capture Compare 3 Event source
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_CC4: Timer Capture Compare 4 Event source
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_COM: Timer COM event source  
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_Trigger: Timer Trigger Event source
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_EventSource_Break: Timer Break event source
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_TIxExternalCLK1Source_TI1: Filtered Timer Input 1
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_TIxExternalCLK1Source_TI2: Filtered Timer Input 2
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  /* Configure the Timer Input Clock Source */
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_TS_TI1FP1: Filtered Timer Input 1
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_TS_TI2FP2: Filtered Timer Input 2
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  * @param  TIM_SlaveMode: specifies the Timer Slave Mode.
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  * @param  TIM_MasterSlaveMode: specifies the Timer Master Slave Mode.
+Stm32f10x_tim.c (sourcefile\system\device\drive\lib\src):  *     @arg TIM_MasterSlaveMode_Enable: synchronization between the current timer
+System.c (sourcefile\system):*             data:消息值，MessageTimer类型为32bit地址,其他类型下都是24bit数据
+System.c (sourcefile\system):    if (messageType != TimerMessageType)
+System.h (sourcefile\system):    TimerMessageType    = 0xF0  /*最小值,不允许有值小于它*/
+System.h (sourcefile\system):        struct Timer
+System.h (sourcefile\system):            byte (*Start)(TimerhandleModeEnum mode, uint delay, function registerFunction);
+System.h (sourcefile\system):        }Timer;
+System_stm32f10x.c (sourcefile\system\device\drive\cmsis):  *                                  timer or configure other parameters.
+System_stm32f10x.c (sourcefile\system\device\drive\cmsis):  *         be used by the user application to setup the SysTick timer or configure
+---- Timer Search Errors Encountered (1) ----
+The following 1 files could not be processed:
+E:\code\HB-SC-002\Keil\Output\HB-SC-002.build_log.htm : File could not be opened.

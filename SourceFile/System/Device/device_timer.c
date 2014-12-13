@@ -13,6 +13,9 @@
 
 
 #include "system.h"
+#include "drive.h"
+
+
 
 
 typedef struct 
@@ -26,8 +29,6 @@ typedef struct
 static uint  State = 0;
 static TimerhandleModeEnum Mode;
 static Timer Block[TimerSum];
-
-
 
 
 /*******************************************************************************
@@ -140,6 +141,6 @@ static void Stop(byte id)
 
 void InitializeTimer(void)
 {
-    System.Device.Timer.Start = Start;
-    System.Device.Timer.Stop = Stop; 
+        System.Device.Timer.Start = Start;
+        System.Device.Timer.Stop = Stop; 
 }

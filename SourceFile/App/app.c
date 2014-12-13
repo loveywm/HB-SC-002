@@ -223,12 +223,18 @@ int main(void)
         HB_LED_State(LED_ERR_16);
         while(1)
         {
-
-                Scan_Input_Value();
+                //临时屏蔽，20141212
+                //Scan_Input_Value();
 
 
                 App.Weight_Send = ADC_Filter_1();//这里面大约延时了一段时间32ms
 
+                //App.Input_Data = TIM1->CNT;
+
+                App.Input_Data = System.Device.Encoder.Enc_GetCount();
+                //App.Input_Data = 1;
+
+                //App.Input_Data =TIM_GetCapture1(TIM1);
       
                 HB_Send_ErrorAndWeight(App.Input_Data,App.Weight_Send);
                 

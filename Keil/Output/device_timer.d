@@ -7,3 +7,17 @@
 .\output\device_timer.o: ..\SourceFile\System\Device\device.h
 .\output\device_timer.o: ..\SourceFile\System\OS\os.h
 .\output\device_timer.o: ..\SourceFile\System\GUI\gui.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\drive.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\CMSIS\stm32f10x.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\CMSIS\core_cm3.h
+.\output\device_timer.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\CMSIS\system_stm32f10x.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\stm32f10x_conf.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_adc.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\CMSIS\stm32f10x.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_flash.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_gpio.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_rcc.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_tim.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_usart.h
+.\output\device_timer.o: ..\SourceFile\System\Device\Drive\LIB\inc\misc.h
