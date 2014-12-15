@@ -25,6 +25,10 @@ unsigned char  fram_len = 0;
 //u8 weight_tmp_flag = 0;//临时计算重量是否相等的计数标志
 u8  RT_Send_Flag = 0;//实时数据是否发送的标志
 
+
+signed int Floor_CurrentCount = 0;//用于计数编码器的的值 
+
+
 /*******************************************************************************
 * 函数名	: SystemTickRoutine
 * 描述	    : 应用层系统节拍，用于执行固定间隔功能，间隔时间取决于注册函数
@@ -75,6 +79,9 @@ static void SystickRoutine(void)
                            }
 			
 		}
+
+
+                Floor_CurrentCount += System.Device.Encoder.Enc_GetCount();
 
         
 }
@@ -135,6 +142,8 @@ static void InitializeApp(void)
         InitializeData();
     
         //InitializeMenu();
+        TIM1->CNT = 10000;
+        Floor_CurrentCount = 0;
 
         System.Device.Systick.Register(Systick1000, SystickRoutine);
       
@@ -146,6 +155,8 @@ static void InitializeApp(void)
         //System.Device.Usart1.RxdRegister(Usart1RxdFunction);
 
         System.Device.Usart3.RxdRegister(Usart3RxdFunction);
+
+        //TIM1->CNT = 65523;
 }
 
 //AD算术平均值数字滤波
@@ -229,14 +240,22 @@ int main(void)
 
                 App.Weight_Send = ADC_Filter_1();//这里面大约延时了一段时间32ms
 
-                //App.Input_Data = TIM1->CNT;
+                App.Input_Data = TIM1->CNT;
 
-                App.Input_Data = System.Device.Encoder.Enc_GetCount();
+                //App.Input_Data = Floor_CurrentCount;
                 //App.Input_Data = 1;
 
                 //App.Input_Data =TIM_GetCapture1(TIM1);
+
+                //App.Weight_Send = Floor_CurrentCount;
       
-                HB_Send_ErrorAndWeight(App.Input_Data,App.Weight_Send);
+                //HB_Send_ErrorAndWeight(App.Input_Data,App.Weight_Send);
+                
+                HB_Send_ErrorAndWeight(App.Input_Data,Floor_CurrentCount);
+
+                //printf("App.Input_Data===%d\r\n",App.Input_Data);
+                //printf("Floor_CurrentCount===%d\r\n",Floor_CurrentCount);
+                //DelayMs(1000);
                 
 
         }

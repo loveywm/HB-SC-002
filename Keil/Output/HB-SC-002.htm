@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Output\HB-SC-002.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Output\HB-SC-002.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Sat Dec 13 16:59:35 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.03 [Build 76]: Last Updated: Mon Dec 15 17:05:36 2014
 <BR><P>
 <H3>Maximum Stack Usage =        116 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -146,7 +146,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[35]"></a>main</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, app.o(.text))
+<P><STRONG><a name="[35]"></a>main</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, app.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = main &rArr; ADC_Filter_1 &rArr; DelayMs
 </UL>
 <BR>[Calls]<UL><LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HB_Send_ErrorAndWeight
@@ -317,7 +317,7 @@ Global Symbols
 <P><STRONG><a name="[50]"></a>fputc</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, device_usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = fputc
 </UL>
-<BR>[Calls]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteByteToUsart1
+<BR>[Calls]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteByteToUsart3
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> printfb.o(i.__0printf$bare)
 </UL>
@@ -1180,14 +1180,14 @@ Global Symbols
 
 <P><STRONG><a name="[163]"></a>ENC_Clear_Speed_Buffer</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, device_encoder.o(.text), UNUSED)
 
-<P><STRONG><a name="[b9]"></a>Enc_GetCount</STRONG> (Thumb, 52 bytes, Stack size 0 bytes, device_encoder.o(.text))
+<P><STRONG><a name="[b9]"></a>Enc_GetCount</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, device_encoder.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> device_encoder.o(.text)
 </UL>
 <P><STRONG><a name="[93]"></a>EncoderSystick1000Routine</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, device_encoder.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
 </UL>
 
-<P><STRONG><a name="[72]"></a>InitializeEncoder</STRONG> (Thumb, 190 bytes, Stack size 32 bytes, device_encoder.o(.text))
+<P><STRONG><a name="[72]"></a>InitializeEncoder</STRONG> (Thumb, 182 bytes, Stack size 32 bytes, device_encoder.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = InitializeEncoder &rArr; TIM_ICInit &rArr; TI1_Config
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_StructInit
@@ -1244,7 +1244,7 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[36]"></a>SystickRoutine</STRONG> (Thumb, 112 bytes, Stack size 8 bytes, app.o(.text))
+<P><STRONG><a name="[36]"></a>SystickRoutine</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, app.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = SystickRoutine &rArr; HB_Relay_Cmd &rArr; HB_GPIO_Set_Value
 </UL>
 <BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Rcv_Cmd
@@ -1263,7 +1263,7 @@ Local Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> app.o(.text)
 </UL>
-<P><STRONG><a name="[5b]"></a>InitializeApp</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, app.o(.text))
+<P><STRONG><a name="[5b]"></a>InitializeApp</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, app.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = InitializeApp
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitializeData
@@ -1333,9 +1333,8 @@ Local Symbols
 <P><STRONG><a name="[52]"></a>Dummy</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, device_usart.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> device_usart.o(.data)
 </UL>
-<P><STRONG><a name="[43]"></a>WriteByteToUsart1</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, device_usart.o(.text))
+<P><STRONG><a name="[4c]"></a>WriteByteToUsart3</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, device_usart.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fputc
-<LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteToUsart1
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> device_usart.o(.text)
 </UL>
@@ -1396,10 +1395,12 @@ Local Symbols
 <P><STRONG><a name="[4b]"></a>Usart3RxdRegister</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, device_usart.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> device_usart.o(.text)
 </UL>
-<P><STRONG><a name="[48]"></a>WriteByteToUsart2</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, device_usart.o(.text))
+<P><STRONG><a name="[43]"></a>WriteByteToUsart1</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, device_usart.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WriteToUsart1
+</UL>
 <BR>[Address Reference Count : 1]<UL><LI> device_usart.o(.text)
 </UL>
-<P><STRONG><a name="[4c]"></a>WriteByteToUsart3</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, device_usart.o(.text))
+<P><STRONG><a name="[48]"></a>WriteByteToUsart2</STRONG> (Thumb, 92 bytes, Stack size 0 bytes, device_usart.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> device_usart.o(.text)
 </UL>
 <P><STRONG><a name="[44]"></a>WriteToUsart1</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, device_usart.o(.text))

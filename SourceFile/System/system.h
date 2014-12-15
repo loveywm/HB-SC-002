@@ -282,7 +282,7 @@ typedef struct
         }Usart3;
         struct Encoder
         {
-            unsigned short(*Enc_GetCount)(void);
+            signed short(*Enc_GetCount)(void);
         }Encoder;
         struct Timer
         {

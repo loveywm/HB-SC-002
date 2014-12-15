@@ -76,10 +76,10 @@ int fputc(int ch, FILE *f)
 {
     if (ch == '\n')
     {
-        while(!WriteByteToUsart1('\r'));
+        while(!WriteByteToUsart3('\r'));
     }
 
-    while(!WriteByteToUsart1((byte)ch));
+    while(!WriteByteToUsart3((byte)ch));
 
     return ch;
 }
