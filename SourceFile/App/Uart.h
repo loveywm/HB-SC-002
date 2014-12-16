@@ -12,7 +12,20 @@
 
 
 typedef unsigned char byte;
+///////////////////////////////////帧描述
+//帧头
+#define   PROTOCOL_HEAD_1       0x5A
+#define   PROTOCOL_HEAD_1_COD   0xA5
+#define   PROTOCOL_HEAD_2       0x55
 
+//帧尾
+#define   PROTOCOL_TAIL_1       0x6A
+#define   PROTOCOL_TAIL_1_COD   0x95
+#define   PROTOCOL_TAIL_2       0x69
+
+//转义符
+#define   PROTOCOL_ESC_CHAR     0x99
+#define   PROTOCOL_ESC_CHAR_COD 0x66
 
 enum{
 
@@ -27,15 +40,27 @@ enum{
         CMD_RELAY_DOWN,
         CMD_RELAY_STOP,
 
+        //平层相关的控制代码
+        CMD_LEVEL_UPDATA_CURRENT_COUNT,//更新当前编码器计数值
+        CMD_LEVEL_UPDATA_FLOOR,//更新楼层数据结构指令
+        CMD_LEVEL_UPDATA_LAST_COUNT,//跟新上一次保留的计数器值
+
 };
 
 
 #define         CMD_RT_DATA_LEN         6
+#define         CMD_CURRENT_COUNT_DATA_LEN         4
 
 extern void Usart3RxDataTOApp(byte data);
 //extern  unsigned char Rcv_GPRS_Cmd(void);
 void HB_Send_ErrorAndWeight(u16 error,u32 weight);
 unsigned char   Rcv_Cmd(void);
+
+
+
+void HB_Send_Current_Count(u32 count);
+void HB_Send_Floor(Floor_Data   *floor);
+void HB_Send_Last_Count(u32 count);
 
 #endif
 

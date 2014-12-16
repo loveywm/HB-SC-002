@@ -1,5 +1,5 @@
 Dependencies for Project 'msOS-Stm32', Target 'Target 1': (DO NOT MODIFY !)
-F (..\SourceFile\App\app.c)(0x548EA447)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\SourceFile\App -I..\SourceFile\System -I..\SourceFile\System\Device -I..\SourceFile\System\Device\Drive -I..\SourceFile\System\Device\Drive\CMSIS -I..\SourceFile\System\Device\Drive\LIB\inc -I..\SourceFile\System\OS -I..\SourceFile\System\OS\msOS -I..\SourceFile\System\GUI-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o .\output\app.o --omf_browse .\output\app.crf --depend .\output\app.d)
+F (..\SourceFile\App\app.c)(0x548FC9C3)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\SourceFile\App -I..\SourceFile\System -I..\SourceFile\System\Device -I..\SourceFile\System\Device\Drive -I..\SourceFile\System\Device\Drive\CMSIS -I..\SourceFile\System\Device\Drive\LIB\inc -I..\SourceFile\System\OS -I..\SourceFile\System\OS\msOS -I..\SourceFile\System\GUI-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o .\output\app.o --omf_browse .\output\app.crf --depend .\output\app.d)
 I (..\SourceFile\System\system.h)(0x548E6BC1)
 I (C:\Keil\ARM\ARMCC\include\string.h)(0x5284661A)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x52846614)
@@ -8,9 +8,9 @@ I (C:\Keil\ARM\ARMCC\include\stdarg.h)(0x5284661C)
 I (..\SourceFile\System\Device\device.h)(0x5465A307)
 I (..\SourceFile\System\OS\os.h)(0x53A51E84)
 I (..\SourceFile\System\GUI\gui.h)(0x53A51E3E)
-I (..\SourceFile\App\app.h)(0x5481405C)
+I (..\SourceFile\App\app.h)(0x548F8EBB)
 I (..\SourceFile\App\logic.h)(0x53A51E4C)
-I (..\SourceFile\App\Uart.h)(0x547FBB15)
+I (..\SourceFile\App\Uart.h)(0x548F98D7)
 I (..\SourceFile\App\proc.h)(0x54782BD2)
 I (..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_gpio.h)(0x52048D42)
 I (..\SourceFile\System\Device\Drive\CMSIS\stm32f10x.h)(0x52048D42)
@@ -24,7 +24,7 @@ I (..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_rcc.h)(0x52048D42)
 I (..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_tim.h)(0x52048D42)
 I (..\SourceFile\System\Device\Drive\LIB\inc\stm32f10x_usart.h)(0x52048D42)
 I (..\SourceFile\System\Device\Drive\LIB\inc\misc.h)(0x52048D42)
-F (..\SourceFile\App\Uart.c)(0x547FBA14)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\SourceFile\App -I..\SourceFile\System -I..\SourceFile\System\Device -I..\SourceFile\System\Device\Drive -I..\SourceFile\System\Device\Drive\CMSIS -I..\SourceFile\System\Device\Drive\LIB\inc -I..\SourceFile\System\OS -I..\SourceFile\System\OS\msOS -I..\SourceFile\System\GUI-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o .\output\uart.o --omf_browse .\output\uart.crf --depend .\output\uart.d)
+F (..\SourceFile\App\Uart.c)(0x548FBA77)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\SourceFile\App -I..\SourceFile\System -I..\SourceFile\System\Device -I..\SourceFile\System\Device\Drive -I..\SourceFile\System\Device\Drive\CMSIS -I..\SourceFile\System\Device\Drive\LIB\inc -I..\SourceFile\System\OS -I..\SourceFile\System\OS\msOS -I..\SourceFile\System\GUI-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o .\output\uart.o --omf_browse .\output\uart.crf --depend .\output\uart.d)
 I (..\SourceFile\System\system.h)(0x548E6BC1)
 I (C:\Keil\ARM\ARMCC\include\string.h)(0x5284661A)
 I (C:\Keil\ARM\ARMCC\include\stdio.h)(0x52846614)
@@ -33,9 +33,9 @@ I (C:\Keil\ARM\ARMCC\include\stdarg.h)(0x5284661C)
 I (..\SourceFile\System\Device\device.h)(0x5465A307)
 I (..\SourceFile\System\OS\os.h)(0x53A51E84)
 I (..\SourceFile\System\GUI\gui.h)(0x53A51E3E)
-I (..\SourceFile\App\app.h)(0x5481405C)
+I (..\SourceFile\App\app.h)(0x548F8EBB)
 I (..\SourceFile\App\logic.h)(0x53A51E4C)
-I (..\SourceFile\App\Uart.h)(0x547FBB15)
+I (..\SourceFile\App\Uart.h)(0x548F98D7)
 I (..\SourceFile\App\proc.h)(0x54782BD2)
 F (..\SourceFile\App\Proc.c)(0x5481506C)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\SourceFile\App -I..\SourceFile\System -I..\SourceFile\System\Device -I..\SourceFile\System\Device\Drive -I..\SourceFile\System\Device\Drive\CMSIS -I..\SourceFile\System\Device\Drive\LIB\inc -I..\SourceFile\System\OS -I..\SourceFile\System\OS\msOS -I..\SourceFile\System\GUI-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o .\output\proc.o --omf_browse .\output\proc.crf --depend .\output\proc.d)
 I (..\SourceFile\System\system.h)(0x548E6BC1)
@@ -46,9 +46,9 @@ I (C:\Keil\ARM\ARMCC\include\stdarg.h)(0x5284661C)
 I (..\SourceFile\System\Device\device.h)(0x5465A307)
 I (..\SourceFile\System\OS\os.h)(0x53A51E84)
 I (..\SourceFile\System\GUI\gui.h)(0x53A51E3E)
-I (..\SourceFile\App\app.h)(0x5481405C)
+I (..\SourceFile\App\app.h)(0x548F8EBB)
 I (..\SourceFile\App\logic.h)(0x53A51E4C)
-I (..\SourceFile\App\Uart.h)(0x547FBB15)
+I (..\SourceFile\App\Uart.h)(0x548F98D7)
 I (..\SourceFile\App\proc.h)(0x54782BD2)
 F (..\SourceFile\System\system.h)(0x548E6BC1)()
 F (..\SourceFile\System\system.c)(0x5466FA2B)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\SourceFile\App -I..\SourceFile\System -I..\SourceFile\System\Device -I..\SourceFile\System\Device\Drive -I..\SourceFile\System\Device\Drive\CMSIS -I..\SourceFile\System\Device\Drive\LIB\inc -I..\SourceFile\System\OS -I..\SourceFile\System\OS\msOS -I..\SourceFile\System\GUI-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\PACK\ARM\CMSIS\3.20.4\CMSIS\Include-I C:\Keil\ARM\Inc\ST\STM32F10x-DSTM32F10X_MD -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -o .\output\system.o --omf_browse .\output\system.crf --depend .\output\system.d)

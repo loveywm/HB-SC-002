@@ -42,20 +42,7 @@ void  FlushUart3(void)
     	UART3_RxTail = UART3_RxHead;//UART1_RxTail = UART1_RxHead;
 }
 
-///////////////////////////////////帧描述
-//帧头
-#define   PROTOCOL_HEAD_1       0x5A
-#define   PROTOCOL_HEAD_1_COD   0xA5
-#define   PROTOCOL_HEAD_2       0x55
 
-//帧尾
-#define   PROTOCOL_TAIL_1       0x6A
-#define   PROTOCOL_TAIL_1_COD   0x95
-#define   PROTOCOL_TAIL_2       0x69
-
-//转义符
-#define   PROTOCOL_ESC_CHAR     0x99
-#define   PROTOCOL_ESC_CHAR_COD 0x66
 /////////////////////////////////////////////
 #define    R_DATA_BUFF_LEN  256    //之所以要定义256个长度的数组，就是为了能够让数组“首尾相接”。因为0 -1 = 255 ， 255+1 = 0。
 #define    R_DATA_BUFF_MASK 255
@@ -319,7 +306,90 @@ void HB_Send_ErrorAndWeight(u16 error,u32 weight)
         TransmitByte3(PROTOCOL_TAIL_2);
 }
 
+//发送当前编码器计数器的值
+void HB_Send_Current_Count(u32 count)
+{
+        unsigned char  sum = 0;
+
+        //头
+        TransmitByte3(PROTOCOL_HEAD_1);
+        TransmitByte3(PROTOCOL_HEAD_2);
+
+        //命令字
+        sum+=Ready_One_Byte_To_Send(CMD_LEVEL_UPDATA_CURRENT_COUNT);
+
+        //数据长度
+        sum+=Ready_One_Byte_To_Send(CMD_CURRENT_COUNT_DATA_LEN);
+
+          //32位重量
+        sum+=Ready_One_Byte_To_Send(count);//低位在前
+        sum+=Ready_One_Byte_To_Send(count>>8);//高位在后
+        sum+=Ready_One_Byte_To_Send(count>>16);
+        sum+=Ready_One_Byte_To_Send(count>>24);
+        
+        //校验和
+        TransmitByte3(sum);
+        
+        //尾
+        TransmitByte3(PROTOCOL_TAIL_1);
+        TransmitByte3(PROTOCOL_TAIL_2);
+
+}
+
+//发送前一次关机前保存的编码器计数器的值
+void HB_Send_Last_Count(u32 count)
+{
+        unsigned char  sum = 0;
+        //头
+        TransmitByte3(PROTOCOL_HEAD_1);
+        TransmitByte3(PROTOCOL_HEAD_2);
+        //命令字
+        sum+=Ready_One_Byte_To_Send(CMD_LEVEL_UPDATA_LAST_COUNT);
+        //数据长度
+        sum+=Ready_One_Byte_To_Send(CMD_CURRENT_COUNT_DATA_LEN);
+          //32位重量
+        sum+=Ready_One_Byte_To_Send(count);//低位在前
+        sum+=Ready_One_Byte_To_Send(count>>8);//高位在后
+        sum+=Ready_One_Byte_To_Send(count>>16);
+        sum+=Ready_One_Byte_To_Send(count>>24);
+        //校验和
+        TransmitByte3(sum);
+        //尾
+        TransmitByte3(PROTOCOL_TAIL_1);
+        TransmitByte3(PROTOCOL_TAIL_2);
+
+}
+
+//发送楼层更新数据
+void HB_Send_Floor(Floor_Data   *floor)
+{
+        //        char i;
+        unsigned char  sum = 0;
+
+        //头
+        TransmitByte3(PROTOCOL_HEAD_1);
+        TransmitByte3(PROTOCOL_HEAD_2);
+
+        //命令字
+        sum+=Ready_One_Byte_To_Send(CMD_LEVEL_UPDATA_FLOOR);
+
+        //数据长度
+        sum+=Ready_One_Byte_To_Send(CMD_RT_DATA_LEN);
+
+        sum+=Ready_One_Byte_To_Send(floor->floor_flag);//低位在前
+        sum+=Ready_One_Byte_To_Send(floor->floor_count);//高位在后3
 
 
-
+        sum+=Ready_One_Byte_To_Send(floor->floor_num);//低位在前4
+        sum+=Ready_One_Byte_To_Send((floor->floor_num)>>8);//高位在后5
+        sum+=Ready_One_Byte_To_Send((floor->floor_num)>>16);//6
+        sum+=Ready_One_Byte_To_Send((floor->floor_num)>>24);//7
+        
+        //校验和
+        TransmitByte3(sum);
+        
+        //尾
+        TransmitByte3(PROTOCOL_TAIL_1);
+        TransmitByte3(PROTOCOL_TAIL_2);
+}
 

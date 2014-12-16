@@ -26,8 +26,55 @@ unsigned char  fram_len = 0;
 u8  RT_Send_Flag = 0;//实时数据是否发送的标志
 
 
-signed int Floor_CurrentCount = 0;//用于计数编码器的的值 
-
+//关于自动平层的数值使用
+signed int Floor_CurrentCount = 0;//用于计数编码器的的值 ，要在开机时自动和控制端同步
+Floor_Data   floor_tmp[MAX_FLOOR_NUM];
+/////////////////////////////////////////////
+//判断报文是否校验和正确,pRep保存的报文是掐头去尾
+char   Cmd_Rep_valid(char*  pRep,char* plen)
+{
+	char i = 0,j = 0;
+	//char sum = PROTOCOL_HEAD_1 + PROTOCOL_HEAD_2;
+	char sum = 0;
+	////分析报文，将转义符处理掉
+    	for(i=0;i<(*plen-1);)//最后一个是校验和，不用判断
+	{
+		sum += pRep[i];
+		if(pRep[i] == PROTOCOL_ESC_CHAR)
+		{
+			if(i == *plen-2)
+			{
+				return 0;
+			}
+			else
+			{
+				if((pRep[i+1]!= PROTOCOL_ESC_CHAR_COD)&&
+					(pRep[i+1]!= PROTOCOL_TAIL_1_COD)&&
+					(pRep[i+1]!= PROTOCOL_HEAD_1_COD))
+					return 0;
+				else
+				{
+					sum += pRep[i+1];
+					fram_data_buff[j] = 0xff - pRep[i+1];
+					j++;
+					i+=2;
+				}
+			}
+		}
+		else
+		{
+			fram_data_buff[j] = pRep[i];
+			j++;
+			i++;
+		}
+	}
+	fram_data_buff[j] = pRep[*plen-1];
+	///判断校验和
+	if(sum != fram_data_buff[j])
+		return 0;
+	*plen = fram_data_buff[1]+3;//头+数据长度+数据+校验和
+    	return 1;
+}
 
 /*******************************************************************************
 * 函数名	: SystemTickRoutine
@@ -48,7 +95,9 @@ static void SystickRoutine(void)
         //HB_Send_ErrorAndWeight(App.Input_Data,App.Weight);
                 if(Rcv_Cmd() == 1)
                 {
-			if(fram_data_buff[0] == CMD_RELAY_UP)
+                        if(Cmd_Rep_valid(fram_data_buff,&fram_len))//处理接受的数据是否包含和协议头尾相同的字符，修改数据长度
+                        {
+                            if(fram_data_buff[0] == CMD_RELAY_UP)
 			{
 				HB_Relay_Cmd(RELAY_1,RELAY_ON);
                                     HB_Relay_Cmd(RELAY_2,RELAY_OFF);
@@ -77,7 +126,32 @@ static void SystickRoutine(void)
                                     //HB_Relay_Cmd(RELAY_3,RELAY_OFF);
                                     //DelayMs(500);
                            }
-			
+
+                            else if(fram_data_buff[0] == CMD_LEVEL_UPDATA_CURRENT_COUNT)
+			 {
+
+                                    Floor_CurrentCount |= fram_data_buff[5]<<24;
+				Floor_CurrentCount |= fram_data_buff[4]<<16;
+				Floor_CurrentCount |= fram_data_buff[3]<<8;
+				Floor_CurrentCount |= fram_data_buff[2];
+
+                                    HB_LED_State(LED_ERR_1);
+                            }
+                           else if(fram_data_buff[0] == CMD_LEVEL_UPDATA_FLOOR)
+			 {
+                                    u8	floor_num_tmp = 0;
+				floor_num_tmp = fram_data_buff[3];//楼层数位置
+				floor_tmp[floor_num_tmp-1].floor_num = floor_num_tmp;
+                
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[7]<<24;
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[6]<<16;
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[5]<<8;
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[4];
+
+                                    HB_LED_State(LED_ERR_2);
+                                
+                            }
+                        }	
 		}
 
 
@@ -143,8 +217,41 @@ static void InitializeApp(void)
     
         //InitializeMenu();
         TIM1->CNT = 10000;
-        Floor_CurrentCount = 0;
+        //Floor_CurrentCount = 9999;
 
+
+        
+        System.Device.Usart3.RxdRegister(Usart3RxdFunction);
+
+        HB_LED_State(LED_OK);
+
+        //接收服务端的平层计数值，这个初始化有
+        while(1)
+        {
+                if(Rcv_Cmd() == 1)
+                {
+                        if(Cmd_Rep_valid(fram_data_buff,&fram_len))//处理接受的数据是否包含和协议头尾相同的字符，修改数据长度
+                        {
+                                if(fram_data_buff[0] == CMD_LEVEL_UPDATA_LAST_COUNT)
+			    {
+                                             Floor_CurrentCount |= fram_data_buff[5]<<24;
+					Floor_CurrentCount |= fram_data_buff[4]<<16;
+					Floor_CurrentCount |= fram_data_buff[3]<<8;
+					Floor_CurrentCount |= fram_data_buff[2];
+
+                                            Floor_CurrentCount   -= 10001;
+
+                                            Floor_CurrentCount += System.Device.Encoder.Enc_GetCount();
+
+                                              break;
+                               }
+                            
+                        }
+                        
+                }
+        }
+
+        
         System.Device.Systick.Register(Systick1000, SystickRoutine);
       
     
@@ -154,7 +261,7 @@ static void InitializeApp(void)
 
         //System.Device.Usart1.RxdRegister(Usart1RxdFunction);
 
-        System.Device.Usart3.RxdRegister(Usart3RxdFunction);
+        
 
         //TIM1->CNT = 65523;
 }
@@ -241,17 +348,12 @@ int main(void)
                 App.Weight_Send = ADC_Filter_1();//这里面大约延时了一段时间32ms
 
                 App.Input_Data = TIM1->CNT;
-
-                //App.Input_Data = Floor_CurrentCount;
-                //App.Input_Data = 1;
-
-                //App.Input_Data =TIM_GetCapture1(TIM1);
-
-                //App.Weight_Send = Floor_CurrentCount;
       
-                //HB_Send_ErrorAndWeight(App.Input_Data,App.Weight_Send);
+                HB_Send_ErrorAndWeight(App.Input_Data,App.Weight_Send);
                 
-                HB_Send_ErrorAndWeight(App.Input_Data,Floor_CurrentCount);
+                //HB_Send_ErrorAndWeight(App.Input_Data,Floor_CurrentCount);
+
+                HB_Send_Current_Count(Floor_CurrentCount);
 
                 //printf("App.Input_Data===%d\r\n",App.Input_Data);
                 //printf("Floor_CurrentCount===%d\r\n",Floor_CurrentCount);

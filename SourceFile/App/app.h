@@ -33,7 +33,13 @@ typedef unsigned int UINT32,u32;
 
 #define   MAX_FRAM_LEN    32   /*若帧长度大于此值，则认为无效，重新搜索帧头*/
 
+#define     MAX_FLOOR_NUM   50//此时定义楼层最大高度
 
+typedef struct{
+        u8  floor_flag;//为1时表示在使用，为0时表示数值有问题
+        u8  floor_num;//数值楼层
+        u32     floor_count;//楼层对应的编码器计数值
+}Floor_Data;
 
 
 typedef struct
