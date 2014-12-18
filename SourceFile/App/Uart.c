@@ -393,3 +393,26 @@ void HB_Send_Floor(Floor_Data   *floor)
         TransmitByte3(PROTOCOL_TAIL_2);
 }
 
+//发送楼层平层结果值
+void HB_Send_Level_Return(u8 ret)
+{
+        unsigned char  sum = 0;
+        //头
+        TransmitByte3(PROTOCOL_HEAD_1);
+        TransmitByte3(PROTOCOL_HEAD_2);
+        //命令字
+        sum+=Ready_One_Byte_To_Send(CMD_LEVEL_RETURN_FLAG);
+        //数据长度
+        sum+=Ready_One_Byte_To_Send(CMD_CURRENT_COUNT_DATA_LEN-3);
+          //32位重量
+        sum+=Ready_One_Byte_To_Send(ret);//低位在前
+      
+        //校验和
+        TransmitByte3(sum);
+        //尾
+        TransmitByte3(PROTOCOL_TAIL_1);
+        TransmitByte3(PROTOCOL_TAIL_2);
+
+}
+
+

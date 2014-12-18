@@ -1,9 +1,8 @@
----- Usart3Systick1000Routine Matches (5 in 3 files) ----
-Device_systick.c (sourcefile\system\device):extern void Usart3Systick1000Routine(void);
-Device_systick.c (sourcefile\system\device):            Usart3Systick1000Routine();
-Device_usart.c (sourcefile\system\device):void Usart3Systick1000Routine(void) 
-HB-SC-002.htm (keil\output):<P><STRONG><a name="[95]"></a>Usart3Systick1000Routine</STRONG> (Thumb, 72 bytes, Stack size 0 bytes, device_usart.o(.text))
-HB-SC-002.htm (keil\output):<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Usart3Systick1000Routine
----- Usart3Systick1000Routine Search Errors Encountered (1) ----
+---- HB_Run_Flag Matches (4 in 1 files) ----
+App.c (sourcefile\app):u8  HB_Run_Flag =0;//升降机工作模式，=1是自动平层模式，=0是手动模式
+App.c (sourcefile\app):    if(HB_Run_Flag == 1)
+App.c (sourcefile\app):                HB_Run_Flag = 0;
+App.c (sourcefile\app):                                   HB_Run_Flag= 1;
+---- HB_Run_Flag Search Errors Encountered (1) ----
 The following 1 files could not be processed:
 E:\code\HB-SC-002\Keil\Output\HB-SC-002.build_log.htm : File could not be opened.

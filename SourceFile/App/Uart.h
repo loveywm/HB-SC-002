@@ -44,6 +44,9 @@ enum{
         CMD_LEVEL_UPDATA_CURRENT_COUNT,//更新当前编码器计数值
         CMD_LEVEL_UPDATA_FLOOR,//更新楼层数据结构指令
         CMD_LEVEL_UPDATA_LAST_COUNT,//跟新上一次保留的计数器值
+        CMD_LEVEL_MODE_AUTO,//设置自动平层模式，
+	CMD_LEVEL_RETURN_FLAG,//返回平层结果值
+        
 
 };
 
@@ -61,6 +64,7 @@ unsigned char   Rcv_Cmd(void);
 void HB_Send_Current_Count(u32 count);
 void HB_Send_Floor(Floor_Data   *floor);
 void HB_Send_Last_Count(u32 count);
+void HB_Send_Level_Return(u8 ret);
 
 #endif
 

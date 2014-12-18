@@ -24,12 +24,67 @@ unsigned char  fram_data_buff[MAX_FRAM_LEN];////这个数组保存得到的一个掐头去尾的
 unsigned char  fram_len = 0;
 //u8 weight_tmp_flag = 0;//临时计算重量是否相等的计数标志
 u8  RT_Send_Flag = 0;//实时数据是否发送的标志
+u8  HB_Run_Flag =0;//升降机工作模式，=1是自动平层模式，=0是手动模式
+u8  HB_Run_Floor = 1;//升降机运行的目标楼层，主要是接受控制端发来的数据
+u8  HB_Level_Flag = 0;//平层上升下降的标志=====上升1，下降2，停止0
 
 
 //关于自动平层的数值使用
 signed int Floor_CurrentCount = 0;//用于计数编码器的的值 ，要在开机时自动和控制端同步
 Floor_Data   floor_tmp[MAX_FLOOR_NUM];
 /////////////////////////////////////////////
+
+
+
+void HB_Run_Mode(void)
+{
+    //signed int count_tmp;
+    if(HB_Run_Flag == 1)
+    {
+           //count_tmp = (signed int )floor_tmp[HB_Run_Floor-1].floor_count;
+
+            if(Floor_CurrentCount > (signed int )floor_tmp[HB_Run_Floor-1].floor_count)//向下运行
+            {
+                    
+                     HB_Relay_Cmd(RELAY_1,RELAY_OFF);
+                     HB_Relay_Cmd(RELAY_2,RELAY_ON);
+                     HB_Relay_Cmd(RELAY_4,RELAY_OFF);
+
+                 
+            }
+            else if(Floor_CurrentCount < (signed int )floor_tmp[HB_Run_Floor-1].floor_count)//向上运行
+            {
+                    HB_Relay_Cmd(RELAY_1,RELAY_ON);
+                    HB_Relay_Cmd(RELAY_2,RELAY_OFF);
+                    HB_Relay_Cmd(RELAY_4,RELAY_OFF);
+                   
+                
+            }
+            else if(Floor_CurrentCount == (signed int )floor_tmp[HB_Run_Floor-1].floor_count)//停止
+            {
+                 HB_Relay_Cmd(RELAY_1,RELAY_OFF);
+                HB_Relay_Cmd(RELAY_2,RELAY_OFF);
+                HB_Relay_Cmd(RELAY_4,RELAY_ON);
+                
+                HB_Run_Flag = 0;
+                HB_Send_Level_Return(1);//1//表示OK
+        
+           }
+
+    }
+    else
+    {
+
+
+    }
+    
+
+
+}
+
+
+
+
 //判断报文是否校验和正确,pRep保存的报文是掐头去尾
 char   Cmd_Rep_valid(char*  pRep,char* plen)
 {
@@ -151,11 +206,19 @@ static void SystickRoutine(void)
                                     HB_LED_State(LED_ERR_2);
                                 
                             }
+                           else if(fram_data_buff[0] == CMD_LEVEL_MODE_AUTO)
+                            {
+
+                                   HB_Run_Flag = 1;
+
+                                    HB_Run_Floor = fram_data_buff[2];
+                           }
                         }	
 		}
 
 
                 Floor_CurrentCount += System.Device.Encoder.Enc_GetCount();
+                HB_Run_Mode();
 
         
 }
@@ -233,7 +296,7 @@ static void InitializeApp(void)
                         if(Cmd_Rep_valid(fram_data_buff,&fram_len))//处理接受的数据是否包含和协议头尾相同的字符，修改数据长度
                         {
                                 if(fram_data_buff[0] == CMD_LEVEL_UPDATA_LAST_COUNT)
-			    {
+			     {
                                              Floor_CurrentCount |= fram_data_buff[5]<<24;
 					Floor_CurrentCount |= fram_data_buff[4]<<16;
 					Floor_CurrentCount |= fram_data_buff[3]<<8;
@@ -244,7 +307,33 @@ static void InitializeApp(void)
                                             Floor_CurrentCount += System.Device.Encoder.Enc_GetCount();
 
                                               break;
-                               }
+                                }
+                                else if(fram_data_buff[0] == CMD_LEVEL_UPDATA_FLOOR)
+			     {
+                                    u8	floor_num_tmp = 0;
+				floor_num_tmp = fram_data_buff[3];//楼层数位置
+				floor_tmp[floor_num_tmp-1].floor_num = floor_num_tmp;
+                
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[7]<<24;
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[6]<<16;
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[5]<<8;
+				floor_tmp[floor_num_tmp-1].floor_count  |= fram_data_buff[4];
+
+                                    //printf("floor_tmp[floor_num_tmp-1].floor_count==%d\r\n",floor_tmp[floor_num_tmp-1].floor_count);
+
+                                    HB_LED_State(LED_ERR_2);
+                                
+                                }
+                                else if(fram_data_buff[0] == CMD_RELAY_STOP)
+                                {
+                                    HB_Relay_Cmd(RELAY_1,RELAY_OFF);
+                                    HB_Relay_Cmd(RELAY_2,RELAY_OFF);
+                                    HB_Relay_Cmd(RELAY_4,RELAY_ON);
+                                    //DelayMs(500);
+                                    //HB_Relay_Cmd(RELAY_3,RELAY_OFF);
+                                    //DelayMs(500);
+                                }
+                                
                             
                         }
                         
@@ -333,7 +422,7 @@ u16  ADC_Filter_1(void)
 int main(void) 
 {            
       
-        
+        //int ywm;
         System.Initialize();                                                //初始化系统层
         
         InitializeApp(); 	//初始化应用层
@@ -355,9 +444,11 @@ int main(void)
 
                 HB_Send_Current_Count(Floor_CurrentCount);
 
-                //printf("App.Input_Data===%d\r\n",App.Input_Data);
-                //printf("Floor_CurrentCount===%d\r\n",Floor_CurrentCount);
-                //DelayMs(1000);
+
+
+                //HB_Run_Mode();
+
+             
                 
 
         }
